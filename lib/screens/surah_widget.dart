@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quran/quran.dart' as quran;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
+import 'package:yasin_mulk_waqiya/widgets/button.dart';
 
 class SurahWidget extends StatefulWidget {
   final surahNumber;
@@ -150,10 +151,11 @@ class _SurahWidgetState extends State<SurahWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: StadiumBorder(),
-                  backgroundColor: AppColors.primaryColor,
+              
+              QButton(
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColors.seconderyColor,
                 ),
                 onPressed: () {
                   controller.previousPage(
@@ -161,13 +163,6 @@ class _SurahWidgetState extends State<SurahWidget> {
                     curve: Curves.linear,
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: AppColors.seconderyColor,
-                  ),
-                ),
               ),
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
@@ -191,26 +186,23 @@ class _SurahWidgetState extends State<SurahWidget> {
                   style: TextStyle(color: AppColors.primaryColor),
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: StadiumBorder(),
-                  backgroundColor: AppColors.primaryColor,
+
+
+              QButton(
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: AppColors.seconderyColor,
                 ),
                 onPressed: () {
-                  count++;
+                 count++;
                   controller.nextPage(
                     duration: const Duration(milliseconds: 1),
                     curve: Curves.linear,
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.seconderyColor,
-                  ),
-                ),
               ),
+
+
             ],
           ),
         ),
