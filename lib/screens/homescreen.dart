@@ -53,7 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                             width: MediaQuery.of(context).size.width / 2,
                             // child: Image.asset('assets/bismillah.png')),
-                            child: Column(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
@@ -63,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 20),
                                 ),
                                 Text(
-                                    '${_currentPage + 1}/${quran.getVerseCount(36).toString()}')
+                                    ' (${_currentPage + 1}/${quran.getVerseCount(36).toString()})')
                               ],
                             )), //add remaining verse section
                       ],
