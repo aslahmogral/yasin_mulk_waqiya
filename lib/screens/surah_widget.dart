@@ -66,7 +66,7 @@ class _SurahWidgetState extends State<SurahWidget> {
     );
   }
 
-  List<Widget> yaseenList() {
+  List<Widget> AyahList() {
     int verseCount = quran.getVerseCount(widget.surahNumber);
     int verseLeft = verseCount - _currentPage - 1;
     List<Widget> finalList = [];
@@ -142,8 +142,7 @@ class _SurahWidgetState extends State<SurahWidget> {
     return Scaffold(
       body: PageView(
         controller: controller,
-        children:[...yaseenList()
-        ] ,
+        children: [...AyahList()],
         physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: Padding(
@@ -153,8 +152,7 @@ class _SurahWidgetState extends State<SurahWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              
-              QButton(
+              _currentPage == 0? SizedBox(width: 50,) : QButton(
                 child: Icon(
                   Icons.arrow_back_ios,
                   color: AppColors.seconderyColor,
@@ -177,10 +175,10 @@ class _SurahWidgetState extends State<SurahWidget> {
                       quran.getVerseCount(widget.surahNumber) - 1) {
                     print(_currentPage);
                     print('continue');
-                    Navigator.pop(context,{"type" : "continue"});
+                    Navigator.pop(context, {"type": "continue"});
                   } else {
                     print('exit');
-                    Navigator.pop(context,{"type" : "completed"});
+                    Navigator.pop(context, {"type": "completed"});
                   }
                 },
                 child: Text(
@@ -188,23 +186,22 @@ class _SurahWidgetState extends State<SurahWidget> {
                   style: TextStyle(color: AppColors.primaryColor),
                 ),
               ),
-
-
-              QButton(
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: AppColors.seconderyColor,
-                ),
-                onPressed: () {
-                 count++;
-                  controller.nextPage(
-                    duration: const Duration(milliseconds: 1),
-                    curve: Curves.linear,
-                  );
-                },
-              ),
-
-
+              _currentPage == quran.getVerseCount(widget.surahNumber)- 1
+                  ? SizedBox(width: 50,)
+                  : QButton(
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.seconderyColor,
+                      ),
+                      onPressed: () {
+                        print(_currentPage);
+                        
+                        controller.nextPage(
+                          duration: const Duration(milliseconds: 1),
+                          curve: Curves.linear,
+                        );
+                      },
+                    ),
             ],
           ),
         ),
