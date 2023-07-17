@@ -133,6 +133,7 @@ class _SurahWidgetState extends State<SurahWidget> {
         ),
       );
     }
+
     return finalList;
   }
 
@@ -141,7 +142,8 @@ class _SurahWidgetState extends State<SurahWidget> {
     return Scaffold(
       body: PageView(
         controller: controller,
-        children: yaseenList(),
+        children:[...yaseenList()
+        ] ,
         physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: Padding(
@@ -175,10 +177,10 @@ class _SurahWidgetState extends State<SurahWidget> {
                       quran.getVerseCount(widget.surahNumber) - 1) {
                     print(_currentPage);
                     print('continue');
-                    Navigator.pop(context);
+                    Navigator.pop(context,{"type" : "continue"});
                   } else {
                     print('exit');
-                    Navigator.pop(context);
+                    Navigator.pop(context,{"type" : "completed"});
                   }
                 },
                 child: Text(
