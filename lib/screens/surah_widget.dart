@@ -3,14 +3,15 @@ import 'package:quran/quran.dart' as quran;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class SurahWidget extends StatefulWidget {
+  final surahNumber;
+  const SurahWidget({Key? key, required this.surahNumber}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _SurahWidgetState createState() => _SurahWidgetState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SurahWidgetState extends State<SurahWidget> {
   int count = 1;
   final controller = PageController(initialPage: 0);
   int _currentPage = 0;
@@ -47,12 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        '36. Ya Seen',
+                        '${widget.surahNumber}. ${quran.getSurahName(widget.surahNumber)}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       Text(
-                          ' (${_currentPage + 1}/${quran.getVerseCount(36).toString()})'),
+                          ' (${_currentPage + 1}/${quran.getVerseCount(widget.surahNumber).toString()})'),
                     ],
                   ),
                 ),
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Widget> yaseenList() {
-    int verseCount = quran.getVerseCount(36);
+    int verseCount = quran.getVerseCount(widget.surahNumber);
     int verseLeft = verseCount - _currentPage - 1;
     List<Widget> finalList = [];
     for (int i = 1; i <= verseCount; i++) {
@@ -101,9 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           if (_currentPage == 0)
-                                             Image.asset('assets/bismillah.png'),
+                                            Image.asset('assets/bismillah.png'),
                                           Text(
-                                            quran.getVerse(36, i),
+                                            quran.getVerse(
+                                                widget.surahNumber, i),
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.amiri(
                                               fontWeight: FontWeight.bold,
@@ -139,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: PageView(
         controller: controller,
         children: yaseenList(),
-        physics: NeverScrollableScrollPhysics(), 
+        physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -174,11 +176,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onPressed: () {
                   // print(yaseenList().length);
-                  if (_currentPage != quran.getVerseCount(36)-1) {
+                  if (_currentPage !=
+                      quran.getVerseCount(widget.surahNumber) - 1) {
                     print(_currentPage);
                     print('continue');
+                    Navigator.pop(context);
                   } else {
                     print('exit');
+                    Navigator.pop(context);
                   }
                 },
                 child: Text(

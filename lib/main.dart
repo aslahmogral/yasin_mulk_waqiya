@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yasin_mulk_waqiya/screens/homescreen.dart';
+import 'package:yasin_mulk_waqiya/screens/surah_widget.dart';
+import 'package:yasin_mulk_waqiya/screens/index_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen()
+      home: IndexScreen()
     );
   }
 }
