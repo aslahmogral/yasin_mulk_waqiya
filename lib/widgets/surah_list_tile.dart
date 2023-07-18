@@ -5,7 +5,11 @@ import 'package:quran/quran.dart' as quran;
 
 class SurahListTile extends StatefulWidget {
   final surahNumber;
-  const SurahListTile({super.key,required this.surahNumber});
+  // final previousVerse;
+  const SurahListTile({
+    super.key,
+    required this.surahNumber,
+  });
 
   @override
   State<SurahListTile> createState() => _SurahListTileState();
@@ -13,14 +17,28 @@ class SurahListTile extends StatefulWidget {
 
 class _SurahListTileState extends State<SurahListTile> {
   String progressOfSurah = '';
+  var previousVerse = 0;
 
   Widget typeOfChipMethod(String result) {
     if (result == 'continue') {
-      return Chip(
-        label: Text(
-          'continue',
-        ),
-        backgroundColor: Colors.yellow,
+      var rverses = quran.getVerseCount(widget.surahNumber) - previousVerse;
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "$rverses verses left ",
+            style: TextStyle(color: Colors.white),
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          Chip(
+            label: Text(
+              'continue',
+            ),
+            backgroundColor: Colors.yellow,
+          ),
+        ],
       );
     } else if (result == 'completed') {
       return Chip(
@@ -51,10 +69,14 @@ class _SurahListTileState extends State<SurahListTile> {
                 MaterialPageRoute(
                   builder: (context) => SurahWidget(
                     surahNumber: widget.surahNumber,
+                    previousVerse: previousVerse,
                   ),
                 ));
             setState(() {
               progressOfSurah = result['type'];
+              if (progressOfSurah != "completed") {
+                previousVerse = result['verses'];
+              }
             });
           },
           child: Container(

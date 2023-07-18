@@ -6,28 +6,37 @@ import 'package:yasin_mulk_waqiya/widgets/button.dart';
 
 class SurahWidget extends StatefulWidget {
   final surahNumber;
-  const SurahWidget({Key? key, required this.surahNumber}) : super(key: key);
+  final previousVerse;
+  const SurahWidget({Key? key, required this.surahNumber, this.previousVerse})
+      : super(key: key);
 
   @override
   _SurahWidgetState createState() => _SurahWidgetState();
 }
 
 class _SurahWidgetState extends State<SurahWidget> {
+  int previousVerse = 0;
+
   int count = 1;
-  final controller = PageController(initialPage: 0);
+  PageController controller = PageController(initialPage:0 );
   int _currentPage = 0;
 
   @override
-  void initState() {
-    super.initState();
-    _currentPage = 0;
-    controller.addListener(() {
-      setState(() {
-        _currentPage = controller.page!.toInt();
-      });
-    });
+void initState() {
+  super.initState();
+
+  if (widget.previousVerse != null) {
+    _currentPage = widget.previousVerse;
   }
 
+  controller = PageController(initialPage: _currentPage);
+
+  controller.addListener(() {
+    setState(() {
+      _currentPage = controller.page!.toInt();
+    });
+  });
+}
   Stack appBarArea(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
@@ -152,18 +161,22 @@ class _SurahWidgetState extends State<SurahWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _currentPage == 0? SizedBox(width: 50,) : QButton(
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: AppColors.seconderyColor,
-                ),
-                onPressed: () {
-                  controller.previousPage(
-                    duration: const Duration(milliseconds: 1),
-                    curve: Curves.linear,
-                  );
-                },
-              ),
+              _currentPage == 0
+                  ? SizedBox(
+                      width: 50,
+                    )
+                  : QButton(
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: AppColors.seconderyColor,
+                      ),
+                      onPressed: () {
+                        controller.previousPage(
+                          duration: const Duration(milliseconds: 1),
+                          curve: Curves.linear,
+                        );
+                      },
+                    ),
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   shape: StadiumBorder(),
@@ -175,7 +188,10 @@ class _SurahWidgetState extends State<SurahWidget> {
                       quran.getVerseCount(widget.surahNumber) - 1) {
                     print(_currentPage);
                     print('continue');
-                    Navigator.pop(context, {"type": "continue"});
+                    Navigator.pop(
+                      context,
+                      {"type": "continue", "verses": _currentPage},
+                    );
                   } else {
                     print('exit');
                     Navigator.pop(context, {"type": "completed"});
@@ -186,8 +202,10 @@ class _SurahWidgetState extends State<SurahWidget> {
                   style: TextStyle(color: AppColors.primaryColor),
                 ),
               ),
-              _currentPage == quran.getVerseCount(widget.surahNumber)- 1
-                  ? SizedBox(width: 50,)
+              _currentPage == quran.getVerseCount(widget.surahNumber) - 1
+                  ? SizedBox(
+                      width: 50,
+                    )
                   : QButton(
                       child: Icon(
                         Icons.arrow_forward_ios,
@@ -195,7 +213,7 @@ class _SurahWidgetState extends State<SurahWidget> {
                       ),
                       onPressed: () {
                         print(_currentPage);
-                        
+
                         controller.nextPage(
                           duration: const Duration(milliseconds: 1),
                           curve: Curves.linear,
