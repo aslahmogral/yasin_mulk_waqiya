@@ -68,11 +68,18 @@ class _SurahListTileState extends State<SurahListTile> {
 
   initBox() async {
     box = await Hive.openBox('box');
-    if (box.isNotEmpty) {
+    if (box.isEmpty) {
+      print('empty');
+      // await box.put(widget.surahNumber ,{"progress" : null,"previousVerse" : null});
+    } else {
       var prev = await box.get(widget.surahNumber);
-      progressOfSurah = prev['progress'];
-      previousVerse = prev['previousVerse'];
-      print(prev);
+
+      if (prev != null) {
+        progressOfSurah = prev['progress'];
+        previousVerse = prev['previousVerse'];
+        print(prev);
+      }
+      // await box.put(widget.surahNumber, {'progress', 'previousVerse'});
     }
 
     setState(() {});
