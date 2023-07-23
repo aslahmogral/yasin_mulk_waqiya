@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:yasin_mulk_waqiya/screens/surah_widget.dart';
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
 import 'package:quran/quran.dart' as quran;
@@ -18,6 +19,7 @@ class SurahListTile extends StatefulWidget {
 class _SurahListTileState extends State<SurahListTile> {
   String progressOfSurah = '';
   var previousVerse = 0;
+  late Box box;
 
   Widget typeOfChipMethod(String result) {
     if (result == 'continue') {
@@ -59,6 +61,24 @@ class _SurahListTileState extends State<SurahListTile> {
   }
 
   @override
+  void initState() {
+    initBox();
+    super.initState();
+  }
+
+  initBox() async {
+    box = await Hive.openBox('box');
+    if (box.isNotEmpty) {
+      var prev = await box.get(widget.surahNumber);
+      progressOfSurah = prev['progress'];
+      previousVerse = prev['previousVerse'];
+      print(prev);
+    }
+
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -72,10 +92,15 @@ class _SurahListTileState extends State<SurahListTile> {
                     previousVerse: previousVerse,
                   ),
                 ));
+
             setState(() {
               progressOfSurah = result['type'];
               if (progressOfSurah != "completed") {
                 previousVerse = result['verses'];
+                box.put(widget.surahNumber, {
+                  'previousVerse': previousVerse,
+                  'progress': progressOfSurah
+                });
               }
             });
           },
