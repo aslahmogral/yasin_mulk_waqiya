@@ -117,7 +117,8 @@ void initState() {
                                             quran.getVerse(
                                                 widget.surahNumber, i),
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.amiri(
+                                            style: TextStyle(
+                                              fontFamily: 'AmiriQuran',
                                               fontWeight: FontWeight.bold,
                                               fontSize: 28,
                                             ),
