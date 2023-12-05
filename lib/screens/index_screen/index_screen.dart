@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:yasin_mulk_waqiya/screens/index_screen/index_screen_model.dart';
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
 import 'package:yasin_mulk_waqiya/widgets/appbar.dart';
-import 'package:yasin_mulk_waqiya/widgets/surah_list_tile.dart';
+import 'package:yasin_mulk_waqiya/widgets/surah_list_tile/surah_list_tile.dart';
 
 class IndexScreen extends StatefulWidget {
   const IndexScreen({super.key});
