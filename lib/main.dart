@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:yasin_mulk_waqiya/screens/index_screen.dart';
+import 'package:yasin_mulk_waqiya/screens/index_screen/index_screen.dart';
 
 late Box box;
 Future<void> main() async {

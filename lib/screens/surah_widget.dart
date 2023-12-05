@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quran/quran.dart' as quran;
-import 'package:google_fonts/google_fonts.dart';
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
 import 'package:yasin_mulk_waqiya/widgets/button.dart';
 
