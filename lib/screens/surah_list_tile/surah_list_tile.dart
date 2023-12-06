@@ -4,7 +4,7 @@ import 'package:yasin_mulk_waqiya/utils/colors.dart';
 import 'package:quran/quran.dart' as quran;
 import 'package:yasin_mulk_waqiya/screens/surah_list_tile/surah_list_tile_model.dart';
 
-class SurahListTile extends StatefulWidget {
+class SurahListTile extends StatelessWidget {
   final surahNumber;
   // final previousVerse;
   const SurahListTile({
@@ -13,16 +13,11 @@ class SurahListTile extends StatefulWidget {
   });
 
   @override
-  State<SurahListTile> createState() => _SurahListTileState();
-}
-
-class _SurahListTileState extends State<SurahListTile> {
-  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (_) => surahListTieModel(widget.surahNumber)),
+            create: (_) => surahListTieModel(surahNumber)),
       ],
       child: Consumer<surahListTieModel>(builder: (context, model, child) {
         return Padding(
@@ -43,7 +38,7 @@ class _SurahListTileState extends State<SurahListTile> {
                   child: ListTile(
                       leading: CircleAvatar(
                         child: Text(
-                          '${widget.surahNumber}',
+                          '$surahNumber',
                           style: TextStyle(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.bold),
@@ -51,7 +46,7 @@ class _SurahListTileState extends State<SurahListTile> {
                         backgroundColor: AppColors.seconderyColor,
                       ),
                       title: Text(
-                        quran.getSurahName(widget.surahNumber),
+                        quran.getSurahName(surahNumber),
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -63,11 +58,9 @@ class _SurahListTileState extends State<SurahListTile> {
     );
   }
 
- 
-
   Widget typeOfChipMethod(String result,surahListTieModel model) {
     if (result == 'continue') {
-      var rverses = quran.getVerseCount(widget.surahNumber) - model.previousVerse;
+      var rverses = quran.getVerseCount(surahNumber) - model.previousVerse;
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
