@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:yasin_mulk_waqiya/model/surahmodel.dart';
 import 'package:yasin_mulk_waqiya/screens/surah_screen/surah_screen.dart';
 
 class surahListTieModel with ChangeNotifier {
   String progressOfSurah = '';
   var previousVerse = 0;
   late Box box;
+  late Box surahbox;
   late int surahNumber ;
   surahListTieModel(int surahNumber) {
     this.surahNumber = surahNumber;
@@ -14,7 +16,8 @@ class surahListTieModel with ChangeNotifier {
 
   initBox(int surahNumber) async {
     box = await Hive.openBox('box');
-    if (box.isEmpty) {
+  
+    if (box.isEmpty ) {
       print('empty');
       // await box.put(widget.surahNumber ,{"progress" : null,"previousVerse" : null});
     } else {
@@ -27,6 +30,26 @@ class surahListTieModel with ChangeNotifier {
       }
       // await box.put(widget.surahNumber, {'progress', 'previousVerse'});
     }
+
+    //////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    surahbox = await Hive.openBox<SurahModel>('surahBox');
+    
+     if (surahbox.isEmpty ) {
+      print('empty');
+      // await box.put(widget.surahNumber ,{"progress" : null,"previousVerse" : null});
+    } else {
+      SurahModel prev = await surahbox.get(surahNumber);
+
+      if (prev != null) {
+        progressOfSurah = prev.currentAyah.toString();
+        previousVerse = prev.currentAyah;
+        print(prev);
+      }
+      // await box.put(widget.surahNumber, {'progress', 'previousVerse'});
+    }
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
     notifyListeners();
 
     // setState(() {});
