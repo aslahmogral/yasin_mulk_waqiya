@@ -2,25 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:quran/quran.dart' as quran;
 
 class SurahScreenModel with ChangeNotifier {
-//  int previousVerse = 0;
-
-  // int count = 1;
   PageController controller = PageController(initialPage: 0);
   int currentPage = 0;
   late int surahNumber;
 
   SurahScreenModel(int? previousVerse, int surahNumber) {
-    if (previousVerse != null) {
+    initMethod(previousVerse, surahNumber);
+  }
+
+  void initMethod(int? previousVerse, int surahNumber) {
+     if (previousVerse != null) {
       currentPage = previousVerse;
       this.surahNumber = surahNumber;
     }
-
     controller = PageController(initialPage: currentPage);
-
     controller.addListener(() {
-      // setState(() {
       currentPage = controller.page!.toInt();
-      // });
       notifyListeners();
     });
   }

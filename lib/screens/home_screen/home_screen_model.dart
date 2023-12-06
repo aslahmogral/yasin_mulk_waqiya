@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class IndexScreenModel with ChangeNotifier {
+class HomeScreenModel with ChangeNotifier {
   Future<void> clearProgressButtonClicked() async {
     Box box = await Hive.openBox('box');
 

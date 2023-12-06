@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
 import 'package:quran/quran.dart' as quran;
-import 'package:yasin_mulk_waqiya/widgets/surah_list_tile/surah_list_tile_model.dart';
+import 'package:yasin_mulk_waqiya/screens/surah_list_tile/surah_list_tile_model.dart';
 
 class SurahListTile extends StatefulWidget {
   final surahNumber;
