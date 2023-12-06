@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:yasin_mulk_waqiya/screens/surah_screen/surah_screen.dart';
 
-class surahListTieModel with ChangeNotifier {
+class SurahCardModel with ChangeNotifier {
   String progressOfSurah = '';
   var previousVerse = 0;
   late Box box;
-  late int surahNumber ;
-  surahListTieModel(int surahNumber) {
+  late int surahNumber;
+  
+  SurahCardModel(int surahNumber) {
     this.surahNumber = surahNumber;
     initBox(surahNumber);
   }
@@ -33,7 +34,7 @@ class surahListTieModel with ChangeNotifier {
   }
 
   Future<void> onListTileClicked(
-      BuildContext context, surahListTieModel model) async {
+      BuildContext context, SurahCardModel model) async {
     var result = await Navigator.push(
         context,
         MaterialPageRoute(
@@ -53,6 +54,4 @@ class surahListTieModel with ChangeNotifier {
     // });
     notifyListeners();
   }
-
-  
 }

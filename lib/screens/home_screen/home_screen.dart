@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:yasin_mulk_waqiya/screens/home_screen/home_screen_model.dart';
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
 import 'package:yasin_mulk_waqiya/widgets/appbar.dart';
-import 'package:yasin_mulk_waqiya/screens/surah_list_tile/surah_list_tile.dart';
+import 'package:yasin_mulk_waqiya/screens/surah_card/surah_list_tile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,16 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 16,
                 ),
-                SurahListTile(
+                SurahCard(
                   surahNumber: 36,
                 ),
-                SurahListTile(
+                SurahCard(
                   surahNumber: 67,
                 ),
-                SurahListTile(
+                SurahCard(
                   surahNumber: 56,
                 ),
-                SurahListTile(
+                SurahCard(
                   surahNumber: 18,
                 ),
                 // Expanded(child: SizedBox()),
