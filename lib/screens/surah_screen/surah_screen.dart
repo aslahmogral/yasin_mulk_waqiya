@@ -15,7 +15,8 @@ class SurahWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => SurahScreenModel(previousVerse,surahNumber)),
+        ChangeNotifierProvider(
+            create: (_) => SurahScreenModel(previousVerse, surahNumber)),
       ],
       child: Consumer<SurahScreenModel>(builder: (context, model, child) {
         return Scaffold(
@@ -31,9 +32,15 @@ class SurahWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                   model.currentPage == 0
-                      ? SizedBox(
-                          width: 50,
+                      ? QButton(
+                          buttonColor: Colors.transparent,
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.black45,
+                          ),
+                          onPressed: () {},
                         )
                       : QButton(
                           child: Icon(
@@ -44,23 +51,54 @@ class SurahWidget extends StatelessWidget {
                             model.onBackwardButtonClicked();
                           },
                         ),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      shape: StadiumBorder(),
-                      side: BorderSide(color: AppColors.seconderyColor),
-                    ),
-                    onPressed: () {
-                      // print(yaseenList().length);
-                      model.onIamDoneButtonClicked( context);
-                    },
-                    child: Text(
-                      'I AM DONE',
-                      style: TextStyle(color: AppColors.primaryColor),
-                    ),
-                  ),
+                  //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                  //middle iam done button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
                   model.currentPage == quran.getVerseCount(surahNumber) - 1
-                      ? SizedBox(
-                          width: 50,
+                      ? OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                            shape: StadiumBorder(),
+                            side: BorderSide(color: AppColors.seconderyColor),
+                          ),
+                          onPressed: () {
+                            // print(yaseenList().length);
+                            model.onIamDoneButtonClicked(context);
+                          },
+                          child: Text(
+                            'I AM DONE',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.seconderyColor),
+                          ),
+                        )
+                      : OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            side: BorderSide(color: AppColors.seconderyColor),
+                          ),
+                          onPressed: () {
+                            // print(yaseenList().length);
+                            model.onIamDoneButtonClicked(context);
+                          },
+                          child: Text(
+                            'I AM DONE',
+                            style: TextStyle(color: AppColors.primaryColor),
+                          ),
+                        ),
+
+                  //middle iam  button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                  //right button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                  model.currentPage == quran.getVerseCount(surahNumber) - 1
+                      ? QButton(
+                          buttonColor: Colors.transparent,
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.black45,
+                          ),
+                          onPressed: () {},
                         )
                       : QButton(
                           child: Icon(
@@ -71,6 +109,8 @@ class SurahWidget extends StatelessWidget {
                             model.onForwardButtonClicked();
                           },
                         ),
+
+                  //right button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                 ],
               ),
             ),
@@ -79,8 +119,6 @@ class SurahWidget extends StatelessWidget {
       }),
     );
   }
-
-  
 
   Stack appBarArea(BuildContext context, SurahScreenModel model) {
     return Stack(

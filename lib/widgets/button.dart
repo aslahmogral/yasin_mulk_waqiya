@@ -5,7 +5,12 @@ class QButton extends StatelessWidget {
   final buttonSize;
   final VoidCallback? onPressed;
   final child;
-  const QButton({super.key, this.buttonSize = 100.0, required this.onPressed, this.child});
+  final buttonColor;
+  const QButton(
+      {super.key,
+      this.buttonSize = 100.0,
+      required this.onPressed,
+      this.child, this.buttonColor = AppColors.primaryColor});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,8 @@ class QButton extends StatelessWidget {
         width: buttonSize,
         height: buttonSize,
         decoration: new BoxDecoration(
-          color: AppColors.primaryColor,
+          border: Border.all(width: 1,color:AppColors.seconderyColor ),
+          color: buttonColor,
           shape: BoxShape.circle,
         ),
       ),
