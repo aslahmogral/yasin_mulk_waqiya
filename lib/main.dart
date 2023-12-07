@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:yasin_mulk_waqiya/model/surahmodel.dart';
 import 'package:yasin_mulk_waqiya/screens/home_screen/home_screen.dart';
 
 late Box box;
 Future<void> main() async {
   await Hive.initFlutter();
   box = await Hive.openBox('box');
-  // Hive.registerAdapter(SurahAdapter());
+  Hive.registerAdapter(SurahModelAdapter());
+  await Hive.openBox<SurahModel>('surahBox');
 
   runApp(const MyApp());
 }
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Daily Quran',
         theme: ThemeData(
           fontFamily: 'Poppins',
           // This is the theme of your application.
