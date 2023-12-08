@@ -21,7 +21,7 @@ class SurahListTile extends StatelessWidget {
       child: Consumer<surahListTieModel>(builder: (context, model, child) {
         var versesLeft = quran.getVerseCount(surahNumber) - model.currentAyah;
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: InkWell(
               onTap: () async {
                 await model.onListTileClicked(context, model);
@@ -34,7 +34,7 @@ class SurahListTile extends StatelessWidget {
                 ),
                 child: Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                     child: model.status != 'completed'
                         ? ListTile(
                             leading: CircleAvatar(
