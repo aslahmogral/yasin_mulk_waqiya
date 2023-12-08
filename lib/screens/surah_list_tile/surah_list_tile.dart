@@ -19,9 +19,9 @@ class SurahListTile extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => surahListTieModel(surahNumber)),
       ],
       child: Consumer<surahListTieModel>(builder: (context, model, child) {
-        var rverses = quran.getVerseCount(surahNumber) - model.previousVerse;
+        var versesLeft = quran.getVerseCount(surahNumber) - model.currentAyah;
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: InkWell(
               onTap: () async {
                 await model.onListTileClicked(context, model);
@@ -34,8 +34,8 @@ class SurahListTile extends StatelessWidget {
                 ),
                 child: Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                    child: model.progressOfSurah != 'completed'
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                    child: model.status != 'continue'
                         ? ListTile(
                             leading: CircleAvatar(
                               child: Text(
@@ -52,12 +52,8 @@ class SurahListTile extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
-                            subtitle: Text(
-                              "$rverses verses left ",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            trailing:
-                                typeOfChipMethod(model.progressOfSurah, model))
+                            trailing: typeOfChipMethod(model.status, model),
+                          )
                         : ListTile(
                             leading: CircleAvatar(
                               child: Text(
@@ -74,8 +70,11 @@ class SurahListTile extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
-                            trailing: typeOfChipMethod(
-                                model.progressOfSurah, model))),
+                            subtitle: Text(
+                              "$versesLeft verses left ",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            trailing: typeOfChipMethod(model.status, model))),
               )),
         );
       }),

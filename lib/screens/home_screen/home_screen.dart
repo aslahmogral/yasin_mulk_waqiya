@@ -5,9 +5,14 @@ import 'package:yasin_mulk_waqiya/utils/colors.dart';
 import 'package:yasin_mulk_waqiya/widgets/appbar.dart';
 import 'package:yasin_mulk_waqiya/screens/surah_list_tile/surah_list_tile.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -36,17 +41,21 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 16,
                 ),
-                SurahListTile(
-                  surahNumber: 36,
-                ),
-                SurahListTile(
-                  surahNumber: 67,
-                ),
-                SurahListTile(
-                  surahNumber: 56,
-                ),
-                SurahListTile(
-                  surahNumber: 18,
+                // SurahListTile(
+
+                //   surahNumber: 36,
+                // ),
+                // SurahListTile(
+                //   surahNumber: 67,
+                // ),
+                // SurahListTile(
+                //   surahNumber: 56,
+                // ),
+                // SurahListTile(
+                //   surahNumber: 18,
+                // ),
+                 SurahListTile(
+                  surahNumber: 114,
                 ),
                 // Expanded(child: SizedBox()),
                 // RotatedBox(
