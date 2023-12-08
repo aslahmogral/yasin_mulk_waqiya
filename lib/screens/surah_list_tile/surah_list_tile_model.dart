@@ -8,6 +8,7 @@ class surahListTieModel with ChangeNotifier {
   late Box box;
   late Box surahbox;
   late int surahNumber;
+  
   surahListTieModel(int surahNumber) {
     this.surahNumber = surahNumber;
     initBox(surahNumber);
@@ -16,9 +17,7 @@ class surahListTieModel with ChangeNotifier {
   initBox(int surahNumber) async {
     box = await Hive.openBox('box');
 
-    if (box.isEmpty) {
-      print('empty');
-    } else {
+    if(box.isNotEmpty){
       var prevBox = await box.get(surahNumber);
 
       if (prevBox != null) {
@@ -40,9 +39,7 @@ class surahListTieModel with ChangeNotifier {
 
   Future<void> clearProgressButtonClicked() async {
     Box box = await Hive.openBox('box');
-    print(box.get('box'));
     await box.clear();
-    print(box.get('box'));
     notifyListeners();
   }
 

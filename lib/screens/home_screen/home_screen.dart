@@ -41,18 +41,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 16,
                 ),
-                SurahListTile(
-                  surahNumber: 36,
-                ),
-                SurahListTile(
-                  surahNumber: 67,
-                ),
-                SurahListTile(
-                  surahNumber: 56,
-                ),
-                SurahListTile(
-                  surahNumber: 18,
-                ),
+                // SurahListTile(
+
+                //   surahNumber: 36,
+                // ),
+                // SurahListTile(
+                //   surahNumber: 67,
+                // ),
+                // SurahListTile(
+                //   surahNumber: 56,
+                // ),
+                // SurahListTile(
+                //   surahNumber: 18,
+                // ),
                  SurahListTile(
                   surahNumber: 114,
                 ),
