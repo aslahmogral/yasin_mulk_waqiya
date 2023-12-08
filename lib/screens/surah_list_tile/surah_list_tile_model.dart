@@ -57,15 +57,18 @@ class surahListTieModel with ChangeNotifier {
           ),
         ));
 
-    status = result['status'];
-    if (status != "completed") {
-      currentAyah = result['currentAyah'];
-      box.put(model.surahNumber, {
-        'currentAyah': currentAyah,
-        'status': status,
-        'date': result['date']
-      });
+    if (result != null) {
+      status = result['status'];
+      if (status != "completed") {
+        currentAyah = result['currentAyah'];
+        box.put(model.surahNumber, {
+          'currentAyah': currentAyah,
+          'status': status,
+          'date': result['date']
+        });
+      }
     }
+
     // });
     notifyListeners();
   }

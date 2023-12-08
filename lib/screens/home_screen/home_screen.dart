@@ -53,6 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 SurahListTile(
                   surahNumber: 18,
                 ),
+                 SurahListTile(
+                  surahNumber: 114,
+                ),
                 // Expanded(child: SizedBox()),
                 // RotatedBox(
                 //     quarterTurns: 2,
