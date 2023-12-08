@@ -33,7 +33,7 @@ class SurahWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                  model.currentPage == 0
+                  model.currentPageAkaCurrentAyah == 0
                       ? QButton(
                           buttonColor: Colors.transparent,
                           child: Icon(
@@ -55,7 +55,8 @@ class SurahWidget extends StatelessWidget {
 
                   //middle iam done button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-                  model.currentPage == quran.getVerseCount(surahNumber) - 1
+                  model.currentPageAkaCurrentAyah ==
+                          quran.getVerseCount(surahNumber) - 1
                       ? OutlinedButton(
                           style: OutlinedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
@@ -69,8 +70,8 @@ class SurahWidget extends StatelessWidget {
                           child: Text(
                             'I AM DONE',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.seconderyColor),
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.seconderyColor),
                           ),
                         )
                       : OutlinedButton(
@@ -91,7 +92,8 @@ class SurahWidget extends StatelessWidget {
                   //middle iam  button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
                   //right button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                  model.currentPage == quran.getVerseCount(surahNumber) - 1
+                  model.currentPageAkaCurrentAyah ==
+                          quran.getVerseCount(surahNumber) - 1
                       ? QButton(
                           buttonColor: Colors.transparent,
                           child: Icon(
@@ -146,7 +148,7 @@ class SurahWidget extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       Text(
-                          ' (${model.currentPage + 1}/${quran.getVerseCount(surahNumber).toString()})'),
+                          ' (${model.currentPageAkaCurrentAyah + 1}/${quran.getVerseCount(surahNumber).toString()})'),
                     ],
                   ),
                 ),
@@ -160,7 +162,7 @@ class SurahWidget extends StatelessWidget {
 
   List<Widget> AyahList(BuildContext context, SurahScreenModel model) {
     int verseCount = quran.getVerseCount(surahNumber);
-    int verseLeft = verseCount - model.currentPage - 1;
+    int verseLeft = verseCount - model.currentPageAkaCurrentAyah - 1;
     List<Widget> finalList = [];
     for (int i = 1; i <= verseCount; i++) {
       finalList.add(
@@ -194,7 +196,8 @@ class SurahWidget extends StatelessWidget {
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          if (model.currentPage == 0)
+                                          if (model.currentPageAkaCurrentAyah ==
+                                              0)
                                             Image.asset('assets/bismillah.png'),
                                           Text(
                                             quran.getVerse(surahNumber, i),

@@ -19,7 +19,7 @@ class SurahListTile extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => surahListTieModel(surahNumber)),
       ],
       child: Consumer<surahListTieModel>(builder: (context, model, child) {
-        var rverses = quran.getVerseCount(surahNumber) - model.previousVerse;
+        var versesLeft = quran.getVerseCount(surahNumber) - model.currentAyah;
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: InkWell(
@@ -35,7 +35,7 @@ class SurahListTile extends StatelessWidget {
                 child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                    child: model.progressOfSurah != 'completed'
+                    child: model.status != 'completed'
                         ? ListTile(
                             leading: CircleAvatar(
                               child: Text(
@@ -53,11 +53,10 @@ class SurahListTile extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(
-                              "$rverses verses left ",
+                              "$versesLeft verses left ",
                               style: TextStyle(color: Colors.white),
                             ),
-                            trailing:
-                                typeOfChipMethod(model.progressOfSurah, model))
+                            trailing: typeOfChipMethod(model.status, model))
                         : ListTile(
                             leading: CircleAvatar(
                               child: Text(
@@ -74,8 +73,7 @@ class SurahListTile extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
-                            trailing: typeOfChipMethod(
-                                model.progressOfSurah, model))),
+                            trailing: typeOfChipMethod(model.status, model))),
               )),
         );
       }),

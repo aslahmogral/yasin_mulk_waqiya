@@ -3,7 +3,7 @@ import 'package:quran/quran.dart' as quran;
 
 class SurahScreenModel with ChangeNotifier {
   PageController controller = PageController(initialPage: 0);
-  int currentPage = 0;
+  int currentPageAkaCurrentAyah = 0;
   late int surahNumber;
 
   SurahScreenModel(int? previousVerse, int surahNumber) {
@@ -11,19 +11,19 @@ class SurahScreenModel with ChangeNotifier {
   }
 
   void initMethod(int? previousVerse, int surahNumber) {
-     if (previousVerse != null) {
-      currentPage = previousVerse;
+    if (previousVerse != null) {
+      currentPageAkaCurrentAyah = previousVerse;
       this.surahNumber = surahNumber;
     }
-    controller = PageController(initialPage: currentPage);
+    controller = PageController(initialPage: currentPageAkaCurrentAyah);
     controller.addListener(() {
-      currentPage = controller.page!.toInt();
+      currentPageAkaCurrentAyah = controller.page!.toInt();
       notifyListeners();
     });
   }
 
   void onForwardButtonClicked() {
-    print(currentPage);
+    print(currentPageAkaCurrentAyah);
 
     controller.nextPage(
       duration: const Duration(milliseconds: 1),
@@ -32,25 +32,18 @@ class SurahScreenModel with ChangeNotifier {
   }
 
   void onIamDoneButtonClicked(BuildContext context) {
-    // print(yaseenList().length);
-    if (currentPage != quran.getVerseCount(surahNumber) - 1) {
-      print(currentPage);
-      print('continue');
+    if (currentPageAkaCurrentAyah != quran.getVerseCount(surahNumber) - 1) {
+      print(currentPageAkaCurrentAyah);
       Navigator.pop(
         context,
-        {"type": "continue", "verses": currentPage},
+        {
+          "status": "continue",
+          "currentAyah": currentPageAkaCurrentAyah,
+          "date": DateTime.now()
+        },
       );
-      print('//////////////continue/////////////////');
-      print(currentPage);
-      print('////////////////continue///////////////');
     } else {
-      print('exit');
-      Navigator.pop(context, {
-        "type": "completed",
-      });
-      print('//////////////com/////////////////');
-      print(currentPage);
-      print('////////////////continue///////////////');
+      Navigator.pop(context, {"status": "completed", "date": DateTime.now()});
     }
   }
 
