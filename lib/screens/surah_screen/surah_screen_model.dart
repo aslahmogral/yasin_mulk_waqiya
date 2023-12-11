@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quran/quran.dart' as quran;
 
 class SurahScreenModel with ChangeNotifier {
@@ -8,6 +9,11 @@ class SurahScreenModel with ChangeNotifier {
 
   SurahScreenModel(int? previousVerse, int surahNumber) {
     initMethod(previousVerse, surahNumber);
+  }
+
+  vibrateOnButtonClick() {
+    Clipboard.setData(ClipboardData());
+    HapticFeedback.lightImpact();
   }
 
   void initMethod(int? previousVerse, int surahNumber) {
@@ -23,6 +29,7 @@ class SurahScreenModel with ChangeNotifier {
   }
 
   void onForwardButtonClicked() {
+    vibrateOnButtonClick();
     print(currentPageAkaCurrentAyah);
 
     controller.nextPage(
@@ -32,6 +39,7 @@ class SurahScreenModel with ChangeNotifier {
   }
 
   void onIamDoneButtonClicked(BuildContext context) {
+    vibrateOnButtonClick();
     if (currentPageAkaCurrentAyah != quran.getVerseCount(surahNumber) - 1) {
       print(currentPageAkaCurrentAyah);
       Navigator.pop(
@@ -48,6 +56,7 @@ class SurahScreenModel with ChangeNotifier {
   }
 
   void onBackwardButtonClicked() {
+    vibrateOnButtonClick();
     controller.previousPage(
       duration: const Duration(milliseconds: 1),
       curve: Curves.linear,
