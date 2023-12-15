@@ -3,12 +3,12 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:yasin_mulk_waqiya/screens/surah_screen/surah_screen.dart';
 
 class surahListTieModel with ChangeNotifier {
-  String status = '';
+  String status = 'Read';
   var currentAyah = 0;
   late Box box;
   late Box surahbox;
   late int surahNumber;
-  
+
   surahListTieModel(int surahNumber) {
     this.surahNumber = surahNumber;
     initBox(surahNumber);
@@ -17,18 +17,21 @@ class surahListTieModel with ChangeNotifier {
   initBox(int surahNumber) async {
     box = await Hive.openBox('box');
 
-    if(box.isNotEmpty){
+    if (box.isNotEmpty) {
       var prevBox = await box.get(surahNumber);
 
       if (prevBox != null) {
         status = prevBox['status'];
         currentAyah = prevBox['currentAyah'];
-        // DateTime savedDate = prevBox['date'];
-        // if (DateTime.now() != savedDate) {
-        //   clearProgressButtonClicked();
-        // }
 
-        // print(prevBox);
+        DateTime savedDate = prevBox['date'];
+        if (DateTime.now().day != savedDate.day && DateTime.now().month != savedDate.month) {
+          status = 'Read';
+          box.put(surahNumber, {'currentAyah': 0, 'status': "Read"});
+          
+        }
+
+        print(prevBox);
       }
     }
 
@@ -63,6 +66,8 @@ class surahListTieModel with ChangeNotifier {
           'status': status,
           'date': result['date']
         });
+      } else {
+        box.put(model.surahNumber, {'currentAyah': 0, 'status': status,'date':DateTime.now()});
       }
     }
 

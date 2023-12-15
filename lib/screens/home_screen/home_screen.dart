@@ -26,16 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 MyAppBar(
                   children: [
-                    OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        shape: StadiumBorder(),
-                        side: BorderSide(color: AppColors.seconderyColor),
-                      ),
-                      onPressed: () async {
-                        await model.clearProgressButtonClicked();
-                      },
-                      child: Text('clear Progress'),
-                    ),
+                    // OutlinedButton(
+                    //   style: OutlinedButton.styleFrom(
+                    //     shape: StadiumBorder(),
+                    //     side: BorderSide(color: AppColors.seconderyColor),
+                    //   ),
+                    //   onPressed: () async {
+                    //     await model.clearProgressButtonClicked();
+                    //   },
+                    //   child: Text('clear Progress'),
+                    // ),
                   ],
                 ),
                 SizedBox(
