@@ -61,7 +61,9 @@ class SurahWidget extends StatelessWidget {
                           style: OutlinedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
                             shape: StadiumBorder(),
-                            side: BorderSide(color: AppColors.seconderyColor,),
+                            side: BorderSide(
+                              color: AppColors.seconderyColor,
+                            ),
                           ),
                           onPressed: () {
                             // print(yaseenList().length);
@@ -84,7 +86,8 @@ class SurahWidget extends StatelessWidget {
                           // ),
                           onPressed: () {
                             // print(yaseenList().length);
-                            model.onIamDoneButtonClicked(context);
+                            model.warningMsgBeforeOnIAMDoneButtonClicked(context, model);
+                            // model.onIamDoneButtonClicked(context);
                           },
                           child: Text(
                             'I AM DONE',
@@ -126,6 +129,7 @@ class SurahWidget extends StatelessWidget {
       }),
     );
   }
+
 
   Stack appBarArea(BuildContext context, SurahScreenModel model) {
     return Stack(
