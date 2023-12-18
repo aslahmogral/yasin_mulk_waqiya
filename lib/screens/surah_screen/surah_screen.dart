@@ -86,36 +86,7 @@ class SurahWidget extends StatelessWidget {
                           // ),
                           onPressed: () {
                             // print(yaseenList().length);
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                        'Are You Sure You Want to discontinue'),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              model.onIamDoneButtonClicked(
-                                                  context);
-                                            },
-                                            child: Text('EXIT')),
-                                        ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('Continue'))
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
+                            model.warningMsgBeforeOnIAMDoneButtonClicked(context, model);
                             // model.onIamDoneButtonClicked(context);
                           },
                           child: Text(
@@ -158,6 +129,7 @@ class SurahWidget extends StatelessWidget {
       }),
     );
   }
+
 
   Stack appBarArea(BuildContext context, SurahScreenModel model) {
     return Stack(
