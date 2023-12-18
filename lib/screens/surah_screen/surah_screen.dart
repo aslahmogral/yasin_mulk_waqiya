@@ -61,8 +61,27 @@ class SurahWidget extends StatelessWidget {
                           style: OutlinedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
                             shape: StadiumBorder(),
-                            side: BorderSide(color: AppColors.seconderyColor),
+                            side: BorderSide(color: AppColors.seconderyColor,),
                           ),
+                          onPressed: () {
+                            // print(yaseenList().length);
+                            model.onIamDoneButtonClicked(context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              'I AM DONE',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.seconderyColor),
+                            ),
+                          ),
+                        )
+                      : TextButton(
+                          // style: OutlinedButton.styleFrom(
+                          //   shape: StadiumBorder(),
+                          //   side: BorderSide(color: AppColors.seconderyColor),
+                          // ),
                           onPressed: () {
                             // print(yaseenList().length);
                             model.onIamDoneButtonClicked(context);
@@ -70,22 +89,8 @@ class SurahWidget extends StatelessWidget {
                           child: Text(
                             'I AM DONE',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.seconderyColor),
-                          ),
-                        )
-                      : OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            shape: StadiumBorder(),
-                            side: BorderSide(color: AppColors.seconderyColor),
-                          ),
-                          onPressed: () {
-                            // print(yaseenList().length);
-                            model.onIamDoneButtonClicked(context);
-                          },
-                          child: Text(
-                            'I AM DONE',
-                            style: TextStyle(color: AppColors.primaryColor),
+                                color: AppColors.seconderyColor,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
 
