@@ -61,7 +61,9 @@ class SurahWidget extends StatelessWidget {
                           style: OutlinedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
                             shape: StadiumBorder(),
-                            side: BorderSide(color: AppColors.seconderyColor,),
+                            side: BorderSide(
+                              color: AppColors.seconderyColor,
+                            ),
                           ),
                           onPressed: () {
                             // print(yaseenList().length);
@@ -84,7 +86,37 @@ class SurahWidget extends StatelessWidget {
                           // ),
                           onPressed: () {
                             // print(yaseenList().length);
-                            model.onIamDoneButtonClicked(context);
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                        'Are You Sure You Want to discontinue'),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              model.onIamDoneButtonClicked(
+                                                  context);
+                                            },
+                                            child: Text('EXIT')),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('Continue'))
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                            // model.onIamDoneButtonClicked(context);
                           },
                           child: Text(
                             'I AM DONE',

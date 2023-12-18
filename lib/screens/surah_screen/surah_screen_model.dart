@@ -51,7 +51,7 @@ class SurahScreenModel with ChangeNotifier {
         },
       );
     } else {
-      Navigator.pop(context, {"status": "completed", "date": DateTime.now()});
+      Navigator.pop(context, {"status": "completed", "date": DateTime.now(),"currentAyah":0});
     }
   }
 
