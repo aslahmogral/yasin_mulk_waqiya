@@ -2,70 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yasin_mulk_waqiya/screens/home_screen/home_screen_model.dart';
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
-import 'package:yasin_mulk_waqiya/widgets/appbar.dart';
-import 'package:yasin_mulk_waqiya/screens/surah_list_tile/surah_list_tile.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HomeScreenModel()),
       ],
-      child: Consumer<HomeScreenModel>(builder: (context, model, child) {
+      child: Consumer(builder: (context, HomeScreenModel model, child) {
         return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                MyAppBar(
-                  children: [
-                    // OutlinedButton(
-                    //   style: OutlinedButton.styleFrom(
-                    //     shape: StadiumBorder(),
-                    //     side: BorderSide(color: AppColors.seconderyColor),
-                    //   ),
-                    //   onPressed: () async {
-                    //     await model.clearProgressButtonClicked();
-                    //   },
-                    //   child: Text('clear Progress'),
-                    // ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                SurahListTile(
-
-                  surahNumber: 36,
-                ),
-                SurahListTile(
-                  surahNumber: 67,
-                ),
-                SurahListTile(
-                  surahNumber: 56,
-                ),
-                SurahListTile(
-                  surahNumber: 18,
-                ),
-                //  SurahListTile(
-                //   surahNumber: 114,
-                // ),
-                // Expanded(child: SizedBox()),
-                // RotatedBox(
-                //     quarterTurns: 2,
-                //     child: MyAppBar(
-                //       children: [],
-                //     )),
-              ],
-            ),
-          ),
+          body: model.screensForBottomNav[model.currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            
+              backgroundColor: AppColors.primaryColor,
+              fixedColor: AppColors.seconderyColor,
+              unselectedItemColor: Colors.white.withOpacity(0.5),
+              onTap: (index) {
+                model.onBottomNavigationTap(index);
+              },
+              currentIndex: model.currentIndex,
+              items: [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.bookmark), label: 'Favourite Surahs'),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.book_sharp,
+                    ),
+                    label: 'All Surahs')
+              ]),
         );
       }),
     );
