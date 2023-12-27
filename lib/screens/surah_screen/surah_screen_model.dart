@@ -4,6 +4,7 @@ import 'package:quran/quran.dart' as quran;
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
 
 class SurahScreenModel with ChangeNotifier {
+  bool isSajdah = false;
   PageController controller = PageController(initialPage: 0);
   int currentPageAkaCurrentAyah = 0;
   late int surahNumber;
@@ -52,7 +53,8 @@ class SurahScreenModel with ChangeNotifier {
         },
       );
     } else {
-      Navigator.pop(context, {"status": "completed", "date": DateTime.now(),"currentAyah":0});
+      Navigator.pop(context,
+          {"status": "completed", "date": DateTime.now(), "currentAyah": 0});
     }
   }
 
@@ -64,29 +66,32 @@ class SurahScreenModel with ChangeNotifier {
     );
   }
 
-    void warningMsgBeforeOnIAMDoneButtonClicked(BuildContext context, SurahScreenModel model) {
-     showDialog(
+  void warningMsgBeforeOnIAMDoneButtonClicked(
+      BuildContext context, SurahScreenModel model) {
+    showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Center(child: Text('Alert!!!'),),
+        title: Center(
+          child: Text('Alert!!!'),
+        ),
         shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(32.0))),
-
+            borderRadius: BorderRadius.all(Radius.circular(32.0))),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-                'Are You Sure You Want to discontinue',),
-                SizedBox(height: 16,),
+              'Are You Sure You Want to discontinue',
+            ),
+            SizedBox(
+              height: 16,
+            ),
             Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    model.onIamDoneButtonClicked(
-                        context);
+                    model.onIamDoneButtonClicked(context);
                   },
                   child: Text(
                     'EXIT',
@@ -97,8 +102,7 @@ class SurahScreenModel with ChangeNotifier {
                 ),
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    backgroundColor:
-                        AppColors.primaryColor,
+                    backgroundColor: AppColors.primaryColor,
                     shape: StadiumBorder(),
                     side: BorderSide(
                       color: AppColors.seconderyColor,
@@ -115,14 +119,13 @@ class SurahScreenModel with ChangeNotifier {
                       'CONTINUE',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color:
-                              AppColors.seconderyColor),
+                          color: AppColors.seconderyColor),
                     ),
                   ),
                 ),
                 // ElevatedButton(
                 //     onPressed: () {
-    
+
                 //     },
                 //     child: Text('Continue'))
               ],
@@ -131,7 +134,10 @@ class SurahScreenModel with ChangeNotifier {
         ),
       ),
     );
-                               
   }
 
+  isSajdahCheck(int verseNumber) {
+    isSajdah = quran.isSajdahVerse(surahNumber, verseNumber);
+    // notifyListeners();
+  }
 }
