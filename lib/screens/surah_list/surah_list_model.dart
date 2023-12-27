@@ -18,9 +18,12 @@ class SurahListModel with ChangeNotifier {
   SurahListModel() {
     // this.index = index;
     initDailySurahs();
+    // switchSurahList(index);
   }
 
   initDailySurahs() {
+    isSurahLoading = true;
+    notifyListeners();
     for (int i = 0; i < favSurahNumberList.length; i++) {
       favoriteSurahList.add(
         SurahTile(
@@ -38,18 +41,25 @@ class SurahListModel with ChangeNotifier {
       );
     }
     // switchSurahList();
+    isSurahLoading = false;
+    
     notifyListeners();
   }
 
-  switchSurahList(int index) {
+  switchSurahList(int index) async {
     isSurahLoading = true;
+    notifyListeners();
     if (index == 0) {
+      finalList.clear();
       finalList = favoriteSurahList;
       // notifyListeners();
     } else {
+      finalList.clear();
+
       finalList = dailySurahList;
       // notifyListeners();
     }
     isSurahLoading = false;
+    notifyListeners();
   }
 }

@@ -54,7 +54,13 @@ class SurahTile extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
-                            trailing: typeOfChipMethod(model.status, model),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                typeOfChipMethod(model.status, model),
+                                moreSectionInListTile(context, model)
+                              ],
+                            ),
                           )
                         : ListTile(
                             leading: CircleAvatar(
@@ -76,7 +82,13 @@ class SurahTile extends StatelessWidget {
                               "$versesLeft verses left ",
                               style: TextStyle(color: Colors.white),
                             ),
-                            trailing: typeOfChipMethod(model.status, model))),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                typeOfChipMethod(model.status, model),
+                                moreSectionInListTile(context, model)
+                              ],
+                            ))),
               )),
         );
       }),
@@ -115,5 +127,24 @@ class SurahTile extends StatelessWidget {
       );
     }
     // return finalString;
+  }
+
+  Widget moreSectionInListTile(context, surahTileModel model) {
+    return IconButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                content: TextButton(
+                    onPressed: () {
+                      model.addFavouriteSurah();
+                    },
+                    child: Text('Add to favorite'))),
+          );
+        },
+        icon: Icon(
+          Icons.more_vert,
+          color: Colors.white,
+        ));
   }
 }

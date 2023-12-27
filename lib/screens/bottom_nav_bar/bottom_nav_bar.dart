@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yasin_mulk_waqiya/screens/home_screen/home_screen_model.dart';
+import 'package:yasin_mulk_waqiya/screens/bottom_nav_bar/bottom_nav_bar_model.dart';
 import 'package:yasin_mulk_waqiya/utils/colors.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,6 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           body: model.screensForBottomNav[model.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
-            
               backgroundColor: AppColors.primaryColor,
               fixedColor: AppColors.seconderyColor,
               unselectedItemColor: Colors.white.withOpacity(0.5),

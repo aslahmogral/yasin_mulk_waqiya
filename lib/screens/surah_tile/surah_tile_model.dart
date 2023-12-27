@@ -26,14 +26,19 @@ class surahTileModel with ChangeNotifier {
         status = prevBox['status'];
         currentAyah = prevBox['currentAyah'];
 
-        DateTime savedDate = prevBox['date'];
-        if (DateTime.now().day != savedDate.day &&
-            DateTime.now().month != savedDate.month) {
-          status = 'Read';
-          box.put(surahNumber, {'currentAyah': 0, 'status': "Read"});
-        }
+        // DateTime savedDate = prevBox['date'];
+        // if (DateTime.now().day != savedDate.day &&
+        //     DateTime.now().month != savedDate.month) {
+        //   status = 'Read';
+        //   box.put(surahNumber, {'currentAyah': 0, 'status': "Read"});
+        // } // DateTime savedDate = prevBox['date'];
+        // if (DateTime.now().day != savedDate.day &&
+        //     DateTime.now().month != savedDate.month) {
+        //   status = 'Read';
+        //   box.put(surahNumber, {'currentAyah': 0, 'status': "Read"});
+        // }
 
-        print(prevBox);
+        // print(prevBox);
       }
     }
 
@@ -77,4 +82,121 @@ class surahTileModel with ChangeNotifier {
     // });
     notifyListeners();
   }
+
+  addFavouriteSurah() async {
+    var box = await Hive.box('box');
+    var List = await box.get('fav');
+    List.add(surahNumber);
+    box.put('fav', List);
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
