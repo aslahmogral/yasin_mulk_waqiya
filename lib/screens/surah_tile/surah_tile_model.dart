@@ -1,6 +1,6 @@
+import 'package:daily_quran/screens/surah_screen/surah_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:yasin_mulk_waqiya/screens/surah_screen/surah_screen.dart';
 
 class surahTileModel with ChangeNotifier {
   String status = 'Read';

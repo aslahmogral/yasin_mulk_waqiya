@@ -1,9 +1,9 @@
+import 'package:daily_quran/main_model.dart';
+import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:yasin_mulk_waqiya/main_model.dart';
 
-import 'package:yasin_mulk_waqiya/screens/bottom_nav_bar/bottom_nav_bar.dart';
 
 late Box box;
 Future<void> main() async {
