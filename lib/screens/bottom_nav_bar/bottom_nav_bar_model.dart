@@ -1,6 +1,6 @@
+import 'package:daily_quran/screens/surah_list/all_surah_list.dart';
+import 'package:daily_quran/screens/surah_list/fav_surah_list.dart';
 import 'package:flutter/material.dart';
-import 'package:yasin_mulk_waqiya/screens/surah_list/all_surah_list.dart';
-import 'package:yasin_mulk_waqiya/screens/surah_list/fav_surah_list.dart';
 
 class HomeScreenModel with ChangeNotifier {
   int currentIndex = 0;
