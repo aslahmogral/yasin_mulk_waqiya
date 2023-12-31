@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yasin_mulk_waqiya/screens/surah_list/surah_list_model.dart';
-import 'package:yasin_mulk_waqiya/utils/colors.dart';
+import 'package:daily_quran/screens/surah_list/surah_list_model.dart';
+import 'package:daily_quran/utils/colors.dart';
 
 class SurahListScreen extends StatefulWidget {
   const SurahListScreen({
