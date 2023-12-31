@@ -1,6 +1,6 @@
+import 'package:daily_quran/screens/surah_tile/surah_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:yasin_mulk_waqiya/screens/surah_tile/surah_tile.dart';
 
 class SurahListModel with ChangeNotifier {
   List<Widget> dailySurahList = [];
@@ -42,7 +42,7 @@ class SurahListModel with ChangeNotifier {
     }
     // switchSurahList();
     isSurahLoading = false;
-    
+
     notifyListeners();
   }
 

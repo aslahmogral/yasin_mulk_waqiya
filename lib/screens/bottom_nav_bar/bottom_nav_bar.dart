@@ -1,7 +1,7 @@
+import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yasin_mulk_waqiya/screens/bottom_nav_bar/bottom_nav_bar_model.dart';
-import 'package:yasin_mulk_waqiya/utils/colors.dart';
+import 'package:daily_quran/utils/colors.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});

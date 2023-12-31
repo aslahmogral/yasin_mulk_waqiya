@@ -1,9 +1,9 @@
+import 'package:daily_quran/screens/surah_screen/surah_screen_model.dart';
+import 'package:daily_quran/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quran/quran.dart' as quran;
-import 'package:yasin_mulk_waqiya/screens/surah_screen/surah_screen_model.dart';
-import 'package:yasin_mulk_waqiya/utils/colors.dart';
-import 'package:yasin_mulk_waqiya/widgets/button.dart';
+import 'package:daily_quran/utils/colors.dart';
 
 class SurahWidget extends StatelessWidget {
   final surahNumber;

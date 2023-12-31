@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quran/quran.dart' as quran;
-import 'package:yasin_mulk_waqiya/utils/colors.dart';
+import 'package:daily_quran/utils/colors.dart';
 
 class SurahScreenModel with ChangeNotifier {
   bool isSajdah = false;
@@ -14,7 +14,7 @@ class SurahScreenModel with ChangeNotifier {
   }
 
   vibrateOnButtonClick() {
-    Clipboard.setData(ClipboardData());
+    Clipboard.setData(ClipboardData(text: ''));
     HapticFeedback.lightImpact();
   }
 
