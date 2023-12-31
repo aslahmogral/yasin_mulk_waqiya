@@ -35,7 +35,7 @@ class _SurahListScreenState extends State<SurahListScreen> {
             centerTitle: true,
             backgroundColor: AppColors.primaryColor,
             title: Text(
-              'Daily Favourite Quran',
+              'Daily Quran',
               style: TextStyle(
                   fontWeight: FontWeight.bold, color: AppColors.seconderyColor),
             ),
