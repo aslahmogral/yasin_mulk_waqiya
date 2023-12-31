@@ -14,7 +14,7 @@ class SurahScreenModel with ChangeNotifier {
   }
 
   vibrateOnButtonClick() {
-    Clipboard.setData(ClipboardData());
+    Clipboard.setData(ClipboardData(text: ''));
     HapticFeedback.lightImpact();
   }
 
