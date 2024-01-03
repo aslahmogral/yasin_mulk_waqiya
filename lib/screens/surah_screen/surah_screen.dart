@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:quran/quran.dart' as quran;
 import 'package:daily_quran/utils/colors.dart';
 
-class SurahWidget extends StatelessWidget {
+class SurahScreen extends StatelessWidget {
   final surahNumber;
   final previousVerse;
-  const SurahWidget({Key? key, required this.surahNumber, this.previousVerse})
+  const SurahScreen({Key? key, required this.surahNumber, this.previousVerse})
       : super(key: key);
 
   @override
@@ -19,125 +19,131 @@ class SurahWidget extends StatelessWidget {
             create: (_) => SurahScreenModel(previousVerse, surahNumber)),
       ],
       child: Consumer<SurahScreenModel>(builder: (context, model, child) {
-        return Scaffold(
-          body: PageView(
-            controller: model.controller,
-            children: [...AyahList(context, model)],
-            physics: NeverScrollableScrollPhysics(),
-          ),
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  width: 32,
-                ),
-                model.currentPageAkaCurrentAyah == 0
-                    ? QButton(
-                        buttonColor: Colors.transparent,
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.black45,
-                        ),
-                        onPressed: () {},
-                      )
-                    : QButton(
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: AppColors.seconderyColor,
-                        ),
-                        onPressed: () {
-                          model.onBackwardButtonClicked();
-                        },
-                      ),
-                //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                Spacer(), //middle iam done button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-                model.currentPageAkaCurrentAyah ==
-                        quran.getVerseCount(surahNumber) - 1
-                    ? OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
-                          shape: StadiumBorder(),
-                          side: BorderSide(
+        return WillPopScope(
+          onWillPop: () {
+            return Future(() => false);
+          },
+          child: Scaffold(
+            body: PageView(
+              controller: model.controller,
+              children: [...AyahList(context, model)],
+              physics: NeverScrollableScrollPhysics(),
+            ),
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    width: 32,
+                  ),
+                  model.currentPageAkaCurrentAyah == 0
+                      ? QButton(
+                          buttonColor: Colors.transparent,
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.black45,
+                          ),
+                          onPressed: () {},
+                        )
+                      : QButton(
+                          child: Icon(
+                            Icons.arrow_back_ios,
                             color: AppColors.seconderyColor,
                           ),
+                          onPressed: () {
+                            model.onBackwardButtonClicked();
+                          },
                         ),
-                        onPressed: () {
-                          // print(yaseenList().length);
-                          model.onIamDoneButtonClicked(context);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                  //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                  Spacer(), //middle iam done button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                  model.currentPageAkaCurrentAyah ==
+                          quran.getVerseCount(surahNumber) - 1
+                      ? OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                            shape: StadiumBorder(),
+                            side: BorderSide(
+                              color: AppColors.seconderyColor,
+                            ),
+                          ),
+                          onPressed: () {
+                            // print(yaseenList().length);
+                            model.onExitButtonClicked(context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              'I AM DONE',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.seconderyColor),
+                            ),
+                          ),
+                        )
+                      : TextButton(
+                          // style: OutlinedButton.styleFrom(
+                          //   shape: StadiumBorder(),
+                          //   side: BorderSide(color: AppColors.seconderyColor),
+                          // ),
+                          onPressed: () {
+                            // print(yaseenList().length);
+                            model.warningMsgBeforeOnIAMDoneButtonClicked(
+                              context,
+                            );
+                            // model.onIamDoneButtonClicked(context);
+                          },
                           child: Text(
                             'I AM DONE',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.seconderyColor),
+                                color: AppColors.seconderyColor,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
-                      )
-                    : TextButton(
-                        // style: OutlinedButton.styleFrom(
-                        //   shape: StadiumBorder(),
-                        //   side: BorderSide(color: AppColors.seconderyColor),
-                        // ),
-                        onPressed: () {
-                          // print(yaseenList().length);
-                          model.warningMsgBeforeOnIAMDoneButtonClicked(
-                              context, model);
-                          // model.onIamDoneButtonClicked(context);
-                        },
-                        child: Text(
-                          'I AM DONE',
-                          style: TextStyle(
-                              color: AppColors.seconderyColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
 
-                //middle iam  button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                Spacer(),
-                //right button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                model.currentPageAkaCurrentAyah ==
-                        quran.getVerseCount(surahNumber) - 1
-                    ? QButton(
-                        buttonColor: Colors.transparent,
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.black45,
+                  //middle iam  button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                  Spacer(),
+                  //right button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                  model.currentPageAkaCurrentAyah ==
+                          quran.getVerseCount(surahNumber) - 1
+                      ? QButton(
+                          buttonColor: Colors.transparent,
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.black45,
+                          ),
+                          onPressed: () {},
+                        )
+                      : QButton(
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: AppColors.seconderyColor,
+                          ),
+                          onPressed: () {
+                            model.onForwardButtonClicked();
+                          },
                         ),
-                        onPressed: () {},
-                      )
-                    : QButton(
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: AppColors.seconderyColor,
-                        ),
-                        onPressed: () {
-                          model.onForwardButtonClicked();
-                        },
-                      ),
-              ],
+                ],
+              ),
             ),
+            // bottomNavigationBar: Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: Container(
+            //     color: Colors.transparent,
+
+            //     height: 180,
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+            //         //right button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ),
-          // bottomNavigationBar: Padding(
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: Container(
-          //     color: Colors.transparent,
-
-          //     height: 180,
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-          //         //right button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-          //       ],
-          //     ),
-          //   ),
-          // ),
         );
       }),
     );

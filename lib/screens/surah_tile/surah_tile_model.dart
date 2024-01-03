@@ -58,7 +58,7 @@ class surahTileModel with ChangeNotifier {
     var result = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SurahWidget(
+          builder: (context) => SurahScreen(
             surahNumber: model.surahNumber,
             previousVerse: model.currentAyah,
           ),

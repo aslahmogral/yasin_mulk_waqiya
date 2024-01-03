@@ -40,7 +40,7 @@ class SurahScreenModel with ChangeNotifier {
     );
   }
 
-  void onIamDoneButtonClicked(BuildContext context) {
+  void onExitButtonClicked(BuildContext context) {
     vibrateOnButtonClick();
     if (currentPageAkaCurrentAyah != quran.getVerseCount(surahNumber) - 1) {
       print(currentPageAkaCurrentAyah);
@@ -67,7 +67,8 @@ class SurahScreenModel with ChangeNotifier {
   }
 
   void warningMsgBeforeOnIAMDoneButtonClicked(
-      BuildContext context, SurahScreenModel model) {
+    BuildContext context,
+  ) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -91,7 +92,7 @@ class SurahScreenModel with ChangeNotifier {
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    model.onIamDoneButtonClicked(context);
+                    onExitButtonClicked(context);
                   },
                   child: Text(
                     'EXIT',
