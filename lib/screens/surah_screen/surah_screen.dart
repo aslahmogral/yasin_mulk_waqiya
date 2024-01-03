@@ -251,6 +251,7 @@ class SurahScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
+                                    SizedBox(height: 16,),
                                     Text(quran.getVerseTranslation(
                                         surahNumber, i)),
                                     SizedBox(
