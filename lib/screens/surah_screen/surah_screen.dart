@@ -231,6 +231,7 @@ class SurahScreen extends StatelessWidget {
                                             quran.getVerse(surahNumber, i),
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
+                                              height: 2,
                                               fontFamily: 'AmiriQuran',
                                               fontWeight: FontWeight.bold,
                                               fontSize: 28,
