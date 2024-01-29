@@ -5,10 +5,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 
-late Box box;
+// late Box box;
 Future<void> main() async {
-  await Hive.initFlutter();
-  box = await Hive.openBox('box');
+  // await Hive.initFlutter();
+  // box = await Hive.openBox('box');
 
   runApp(const MyApp());
 }

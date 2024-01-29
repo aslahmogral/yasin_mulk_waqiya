@@ -5,11 +5,11 @@ class MainModel with ChangeNotifier {
   List favSurah = [];
 
   MainModel() {
-    initBox();
+    // initBox();
   }
 
-  initBox() async {
-    var box = await Hive.openBox('box');
-    box.add({"fav": []});
-  }
+  // initBox() async {
+  //   var box = await Hive.openBox('box');
+  //   box.add({"fav": []});
+  // }
 }

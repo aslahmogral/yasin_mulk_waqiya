@@ -137,7 +137,7 @@ class SurahTile extends StatelessWidget {
             builder: (context) => AlertDialog(
                 content: TextButton(
                     onPressed: () {
-                      model.addFavouriteSurah();
+                      // model.addFavouriteSurah();
                     },
                     child: Text('Add to favorite'))),
           );

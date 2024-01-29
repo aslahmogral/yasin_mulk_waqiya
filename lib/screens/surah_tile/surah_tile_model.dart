@@ -7,13 +7,13 @@ class surahTileModel with ChangeNotifier {
   var currentAyah = 0;
   late Box box;
   late Box surahbox;
-  late int surahNumber;
+  late int surahNumber = 1;
   late String boxName;
 
   surahTileModel(int surahNumber, String boxName) {
-    this.surahNumber = surahNumber;
-    this.boxName = boxName;
-    initBox(surahNumber);
+    // this.surahNumber = surahNumber;
+    // this.boxName = boxName;
+    // initBox(surahNumber);
   }
 
   initBox(int surahNumber) async {
@@ -47,11 +47,11 @@ class surahTileModel with ChangeNotifier {
     // setState(() {});
   }
 
-  Future<void> clearProgressButtonClicked() async {
-    Box box = await Hive.openBox(boxName);
-    await box.clear();
-    notifyListeners();
-  }
+  // Future<void> clearProgressButtonClicked() async {
+  //   Box box = await Hive.openBox(boxName);
+  //   await box.clear();
+  //   notifyListeners();
+  // }
 
   Future<void> onListTileClicked(
       BuildContext context, surahTileModel model) async {
@@ -68,14 +68,14 @@ class surahTileModel with ChangeNotifier {
       status = result['status'];
       if (status != "completed") {
         currentAyah = result['currentAyah'];
-        box.put(model.surahNumber, {
-          'currentAyah': currentAyah,
-          'status': status,
-          'date': result['date']
-        });
+        // box.put(model.surahNumber, {
+        //   'currentAyah': currentAyah,
+        //   'status': status,
+        //   'date': result['date']
+        // });
       } else {
-        box.put(model.surahNumber,
-            {'currentAyah': 0, 'status': status, 'date': DateTime.now()});
+        // box.put(model.surahNumber,
+        //     {'currentAyah': 0, 'status': status, 'date': DateTime.now()});
       }
     }
 
@@ -83,12 +83,12 @@ class surahTileModel with ChangeNotifier {
     notifyListeners();
   }
 
-  addFavouriteSurah() async {
-    var box = await Hive.box('box');
-    var List = await box.get('fav');
-    List.add(surahNumber);
-    box.put('fav', List);
-  }
+  // addFavouriteSurah() async {
+  //   var box = await Hive.box('box');
+  //   var List = await box.get('fav');
+  //   List.add(surahNumber);
+  //   box.put('fav', List);
+  // }
 }
 
 
