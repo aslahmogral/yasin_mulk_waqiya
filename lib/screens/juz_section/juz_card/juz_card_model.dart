@@ -60,7 +60,7 @@ class juzCardModel with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => JuzScreen(juzNumber: 1,
+          builder: (context) => JuzScreen(juzNumber:juzNumber,
            
           ),
         ));

@@ -1,6 +1,7 @@
 import 'package:daily_quran/main_model.dart';
 import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:daily_quran/screens/juz_section/juz_screen/juz_screen.dart';
+import 'package:daily_quran/screens/surah_index_screen/juz_index_screen.dart';
 // import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
 // import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:daily_quran/screens/testScreen.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           ),
           // home: BottomNavBar()),
           // home: TestScreen()),
-          home: JuzScreen(juzNumber: 1,)),
+          home: JuzIndexScreen()),
     );
   }
 }

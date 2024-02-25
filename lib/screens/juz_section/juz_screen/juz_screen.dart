@@ -187,7 +187,6 @@ class JuzScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                           // Text('$ayahNumber'),
-                          Text(' (${ayahNumber}/${surahLastAyahNumber})'),
                         ],
                       ),
                     ),
@@ -207,10 +206,28 @@ class JuzScreen extends StatelessWidget {
             ),
             Row(
               children: [
-                SizedBox(width: 10,),
+                Expanded(
+                  child: SizedBox(
+                    width: 10,
+                  ),
+                ),
                 Text(
-                  '${percentage.toInt()} %',
-                  style: TextStyle(color: Colors.white),
+                  ' (${ayahNumber}/${surahLastAyahNumber})',
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      backgroundColor: AppColors.primaryColor.withOpacity(0.5)),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  ' ${percentage.toInt()} % ',
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                      backgroundColor: AppColors.primaryColor.withOpacity(0.5)),
                 ),
               ],
             )
@@ -236,7 +253,14 @@ class JuzScreen extends StatelessWidget {
     // int totalAyahsInJuz = 155;
 
     model.juzMap.values.forEach((value) {
-      total += value[1]; // Summing up the values
+      var subTotal = 0;
+      if (value[0] != 1) {
+        subTotal = value[1] - value[0];
+        total += subTotal;
+      }else{
+        total += value[1]; 
+      }
+      // Summing up the values
     });
 
     List<Widget> finalList = [];
