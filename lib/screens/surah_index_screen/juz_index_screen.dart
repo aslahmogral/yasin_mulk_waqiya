@@ -1,18 +1,19 @@
+import 'package:daily_quran/screens/juz_section/juz_card/juz_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:daily_quran/screens/surah_list/surah_list_model.dart';
+import 'package:daily_quran/screens/surah_index_screen/surah_index_model.dart';
 import 'package:daily_quran/utils/colors.dart';
 
-class SurahListScreen extends StatefulWidget {
-  const SurahListScreen({
+class JuzIndexScreen extends StatefulWidget {
+  const JuzIndexScreen({
     super.key,
   });
 
   @override
-  State<SurahListScreen> createState() => _SurahListScreenState();
+  State<JuzIndexScreen> createState() => _JuzIndexScreenState();
 }
 
-class _SurahListScreenState extends State<SurahListScreen> {
+class _JuzIndexScreenState extends State<JuzIndexScreen> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -51,8 +52,8 @@ class _SurahListScreenState extends State<SurahListScreen> {
                       SizedBox(
                         height: 16,
                       ),
-
-                      ...model.favoriteSurahList
+                      ...model.juzList
+                      // ...model.favoriteSurahList
                       // SurahListTile(
                       //   boxName: 'box',
                       //   surahNumber: 36,

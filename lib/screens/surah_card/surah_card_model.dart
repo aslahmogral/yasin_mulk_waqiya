@@ -2,16 +2,16 @@ import 'package:daily_quran/screens/surah_screen/surah_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
-class surahTileModel with ChangeNotifier {
+class surahCardModel with ChangeNotifier {
   String status = 'Read';
   var currentAyah = 0;
   late Box box;
   late Box surahbox;
-  late int surahNumber = 1;
+  late int surahNumber;
   late String boxName;
 
-  surahTileModel(int surahNumber, String boxName) {
-    // this.surahNumber = surahNumber;
+  surahCardModel(int surahNumber, String boxName) {
+    this.surahNumber = surahNumber;
     // this.boxName = boxName;
     // initBox(surahNumber);
   }
@@ -54,7 +54,7 @@ class surahTileModel with ChangeNotifier {
   // }
 
   Future<void> onListTileClicked(
-      BuildContext context, surahTileModel model) async {
+      BuildContext context, surahCardModel model) async {
     var result = await Navigator.push(
         context,
         MaterialPageRoute(
@@ -90,113 +90,3 @@ class surahTileModel with ChangeNotifier {
   //   box.put('fav', List);
   // }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

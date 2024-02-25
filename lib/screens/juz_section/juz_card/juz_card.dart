@@ -1,16 +1,17 @@
-import 'package:daily_quran/screens/surah_tile/surah_tile_model.dart';
+import 'package:daily_quran/screens/juz_section/juz_card/juz_card_model.dart';
+import 'package:daily_quran/screens/surah_card/surah_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:daily_quran/utils/colors.dart';
 import 'package:quran/quran.dart' as quran;
 
-class SurahTile extends StatelessWidget {
-  final surahNumber;
-  final String boxName;
-  const SurahTile({
+class JuzCard extends StatelessWidget {
+  final juzNumber;
+  // final String boxName;
+  const JuzCard({
     super.key,
-    required this.surahNumber,
-    required this.boxName,
+    required this.juzNumber,
+    // required this.boxName,
   });
 
   @override
@@ -18,10 +19,10 @@ class SurahTile extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (_) => surahTileModel(surahNumber, boxName)),
+            create: (_) => juzCardModel(juzNumber)),
       ],
-      child: Consumer<surahTileModel>(builder: (context, model, child) {
-        var versesLeft = quran.getVerseCount(surahNumber) - model.currentAyah;
+      child: Consumer<juzCardModel>(builder: (context, model, child) {
+        // var versesLeft = quran.getVerseCount(surahNumber) - model.currentAyah;
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
@@ -41,61 +42,63 @@ class SurahTile extends StatelessWidget {
                         ? ListTile(
                             leading: CircleAvatar(
                               child: Text(
-                                '$surahNumber',
+                                '$juzNumber',
                                 style: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.bold),
                               ),
                               backgroundColor: AppColors.seconderyColor,
                             ),
-                            title: Text(
-                              quran.getSurahName(surahNumber),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                typeOfChipMethod(model.status, model),
-                                moreSectionInListTile(context, model)
-                              ],
-                            ),
+                            // title: Text(
+                            //   // quran.getSurahName(juzNumber),
+                            //   juzNumber.toString(),
+                            //   style: TextStyle(
+                            //       color: Colors.white,
+                            //       fontWeight: FontWeight.bold),
+                            // ),
+                            // trailing: Row(
+                            //   mainAxisSize: MainAxisSize.min,
+                            //   children: [
+                            //     typeOfChipMethod(model.status, model),
+                            //     moreSectionInListTile(context, model)
+                            //   ],
+                            // ),
                           )
                         : ListTile(
                             leading: CircleAvatar(
                               child: Text(
-                                '$surahNumber',
+                                '$juzNumber',
                                 style: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.bold),
                               ),
                               backgroundColor: AppColors.seconderyColor,
                             ),
-                            title: Text(
-                              quran.getSurahName(surahNumber),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(
-                              "$versesLeft verses left ",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                typeOfChipMethod(model.status, model),
-                                moreSectionInListTile(context, model)
-                              ],
-                            ))),
+                            // title: Text(
+                            //   quran.getSurahName(juzNumber),
+                            //   style: TextStyle(
+                            //       color: Colors.white,
+                            //       fontWeight: FontWeight.bold),
+                            // ),
+                            // subtitle: Text(
+                            //   "$versesLeft verses left ",
+                            //   style: TextStyle(color: Colors.white),
+                            // ),
+                            // trailing: Row(
+                            //   mainAxisSize: MainAxisSize.min,
+                            //   children: [
+                            //     typeOfChipMethod(model.status, model),
+                            //     moreSectionInListTile(context, model)
+                            //   ],
+                            // )
+                            )),
               )),
         );
       }),
     );
   }
 
-  Widget typeOfChipMethod(String result, surahTileModel model) {
+  Widget typeOfChipMethod(String result, surahCardModel model) {
     if (result == 'continue') {
       return Row(
         mainAxisSize: MainAxisSize.min,
@@ -129,7 +132,7 @@ class SurahTile extends StatelessWidget {
     // return finalString;
   }
 
-  Widget moreSectionInListTile(context, surahTileModel model) {
+  Widget moreSectionInListTile(context, surahCardModel model) {
     return IconButton(
         onPressed: () {
           showDialog(

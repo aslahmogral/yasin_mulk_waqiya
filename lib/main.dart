@@ -1,7 +1,12 @@
 import 'package:daily_quran/main_model.dart';
 import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:daily_quran/screens/juz_section/juz_screen/juz_screen.dart';
+// import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
+// import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:daily_quran/screens/testScreen.dart';
+// import 'package:daily_quran/screens/juz_section/juz_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 
@@ -38,7 +43,9 @@ class MyApp extends StatelessWidget {
             // is not restarted.
             primarySwatch: Colors.blue,
           ),
-          home: BottomNavBar()),
+          // home: BottomNavBar()),
+          // home: TestScreen()),
+          home: JuzScreen(juzNumber: 1,)),
     );
   }
 }
