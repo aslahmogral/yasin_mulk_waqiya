@@ -1,4 +1,4 @@
-import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar_model.dart';
+import 'package:daily_quran/references/screens/bottom_nav_bar/bottom_nav_bar_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:daily_quran/utils/colors.dart';

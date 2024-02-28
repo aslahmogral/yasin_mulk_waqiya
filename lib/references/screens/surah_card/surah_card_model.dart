@@ -1,4 +1,4 @@
-import 'package:daily_quran/screens/surah_screen/surah_screen.dart';
+import 'package:daily_quran/references/screens/surah_screen/surah_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 

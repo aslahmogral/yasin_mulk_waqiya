@@ -1,10 +1,11 @@
+import 'package:daily_quran/juz_section/juz_provider.dart';
 import 'package:daily_quran/main_model.dart';
-import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
-import 'package:daily_quran/screens/juz_section/juz_screen/juz_screen.dart';
-import 'package:daily_quran/screens/surah_index_screen/juz_index_screen.dart';
+import 'package:daily_quran/references/screens/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:daily_quran/juz_section/juz_screen/juz_screen.dart';
+import 'package:daily_quran/juz_section/juz_index_screen.dart';
 // import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
 // import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
-import 'package:daily_quran/screens/testScreen.dart';
+import 'package:daily_quran/references/screens/testScreen.dart';
 // import 'package:daily_quran/screens/juz_section/juz_screen.dart';
 import 'package:flutter/material.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MainModel()),
+        ChangeNotifierProvider(create: (_) => JuzProgressProvider()),
+
       ],
       child: MaterialApp(
           title: 'Daily Quran',

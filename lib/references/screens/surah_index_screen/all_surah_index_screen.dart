@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:daily_quran/screens/surah_index_screen/surah_index_model.dart';
+import 'package:daily_quran/references/screens/surah_index_screen/surah_index_model.dart';
 import 'package:daily_quran/utils/colors.dart';
 
-class SurahListScreen extends StatefulWidget {
-  const SurahListScreen({
+class AllSurahListScreen extends StatefulWidget {
+  const AllSurahListScreen({
     super.key,
   });
 
   @override
-  State<SurahListScreen> createState() => _SurahListScreenState();
+  State<AllSurahListScreen> createState() => _AllSurahListScreenState();
 }
 
-class _SurahListScreenState extends State<SurahListScreen> {
+class _AllSurahListScreenState extends State<AllSurahListScreen> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -52,7 +52,7 @@ class _SurahListScreenState extends State<SurahListScreen> {
                         height: 16,
                       ),
 
-                      ...model.favoriteSurahList
+                      ...model.dailySurahList
                       // SurahListTile(
                       //   boxName: 'box',
                       //   surahNumber: 36,

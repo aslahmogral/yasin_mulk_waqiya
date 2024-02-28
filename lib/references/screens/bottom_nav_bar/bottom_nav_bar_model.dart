@@ -1,5 +1,5 @@
-import 'package:daily_quran/screens/surah_index_screen/all_surah_index_screen.dart';
-import 'package:daily_quran/screens/surah_index_screen/fav_surah_index_screen.dart';
+import 'package:daily_quran/references/screens/surah_index_screen/all_surah_index_screen.dart';
+import 'package:daily_quran/references/screens/surah_index_screen/fav_surah_index_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenModel with ChangeNotifier {

@@ -1,5 +1,6 @@
-import 'package:daily_quran/screens/juz_section/juz_screen/juz_screen_mode.dart';
-import 'package:daily_quran/screens/surah_screen/surah_screen_model.dart';
+import 'package:daily_quran/juz_section/juz_provider.dart';
+import 'package:daily_quran/juz_section/juz_screen/juz_screen_mode.dart';
+import 'package:daily_quran/references/screens/surah_screen/surah_screen_model.dart';
 import 'package:daily_quran/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class JuzScreen extends StatelessWidget {
           },
           child: Scaffold(
             body: PageView(
-              controller: model.controller,
+              controller: model.pageController,
               children: [...AyahList(context, model)],
               physics: NeverScrollableScrollPhysics(),
             ),
@@ -108,24 +109,28 @@ class JuzScreen extends StatelessWidget {
                     ),
                   ),
                 )
-              : TextButton(
-                  // style: OutlinedButton.styleFrom(
-                  //   shape: StadiumBorder(),
-                  //   side: BorderSide(color: AppColors.seconderyColor),
-                  // ),
-                  onPressed: () {
-                    // print(yaseenList().length);
-                    // model.warningMsgBeforeOnIAMDoneButtonClicked(
-                    //   context,
-                    // );
-                  },
-                  child: Text(
-                    'I AM DONE',
-                    style: TextStyle(
-                        color: AppColors.seconderyColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+              : Consumer<JuzProgressProvider>(
+                  builder: (context, juzProgressModel, child) {
+                  return TextButton(
+                    // style: OutlinedButton.styleFrom(
+                    //   shape: StadiumBorder(),
+                    //   side: BorderSide(color: AppColors.seconderyColor),
+                    // ),
+                    onPressed: () {
+                      // print(yaseenList().length);
+                      // model.warningMsgBeforeOnIAMDoneButtonClicked(
+                      //   context,
+                      // );
+                      model.onExitButtonClicked(context, juzProgressModel);
+                    },
+                    child: Text(
+                      'I AM DONE',
+                      style: TextStyle(
+                          color: AppColors.seconderyColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  );
+                }),
 
           // middle iam  button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           Spacer(),
@@ -202,7 +207,7 @@ class JuzScreen extends StatelessWidget {
               color: AppColors.primaryColor,
               backgroundColor: AppColors.seconderyColor.withOpacity(0.5),
               minHeight: 20,
-              value: progressIndicator,
+              value: model.progressIndicator,
             ),
             Row(
               children: [
@@ -249,16 +254,16 @@ class JuzScreen extends StatelessWidget {
     //   }
     // });
     int currentCountInJuz = 0;
-    double total = 0.0;
+    
     // int totalAyahsInJuz = 155;
 
     model.juzMap.values.forEach((value) {
       var subTotal = 0;
       if (value[0] != 1) {
         subTotal = value[1] - value[0];
-        total += subTotal;
-      }else{
-        total += value[1]; 
+        model.total += subTotal;
+      } else {
+        model.total += value[1];
       }
       // Summing up the values
     });
@@ -271,7 +276,8 @@ class JuzScreen extends StatelessWidget {
       //surah fathiha {1 : [value[0] = 1,value[1] = 7] }
       for (int i = ayahList[0]; i <= ayahList[1]; i++) {
         currentCountInJuz++;
-        var trackProgress = currentCountInJuz / total;
+        var trackProgress = currentCountInJuz / model.total;
+        model.progressIndicator = trackProgress;  
 
         finalList.add(
           Column(

@@ -1,5 +1,5 @@
-import 'package:daily_quran/screens/juz_section/juz_card/juz_card.dart';
-import 'package:daily_quran/screens/surah_card/surah_card.dart';
+import 'package:daily_quran/juz_section/juz_card/juz_card.dart';
+import 'package:daily_quran/references/screens/surah_card/surah_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 

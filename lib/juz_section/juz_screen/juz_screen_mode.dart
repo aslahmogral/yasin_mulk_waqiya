@@ -1,3 +1,4 @@
+import 'package:daily_quran/juz_section/juz_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quran/quran.dart';
@@ -5,12 +6,15 @@ import 'package:quran/quran.dart';
 class JuzScreenModel with ChangeNotifier {
   List<Widget> finalList = [];
   Map juzMap = {};
-  PageController controller = PageController(initialPage: 0);
-  int currentPageAkaCurrentAyah = 0;
+  PageController pageController = PageController(initialPage: 0);
+  var currentPageAkaCurrentAyah = 0;
   late int juzNumber;
+  double progressIndicator = 0.0;
+  double total = 0.0;
 
   JuzScreenModel(juzNumber) {
     juzMap = getSurahAndVersesFromJuz(juzNumber);
+    this.juzNumber = juzNumber;
     // juzMap.forEach((key, value) {
     //   // finalList.add(Text(basmala));
     //   for (int i = value[0]; i <= value[1]; i++) {
@@ -24,9 +28,9 @@ class JuzScreenModel with ChangeNotifier {
       // currentPageAkaCurrentAyah = previousVerse;
       this.juzNumber = juzNumber;
     }
-    controller = PageController(initialPage: currentPageAkaCurrentAyah);
-    controller.addListener(() {
-      currentPageAkaCurrentAyah = controller.page!.toInt();
+    pageController = PageController(initialPage: currentPageAkaCurrentAyah);
+    pageController.addListener(() {
+      currentPageAkaCurrentAyah = pageController.page!.toInt();
       notifyListeners();
     });
   }
@@ -40,7 +44,7 @@ class JuzScreenModel with ChangeNotifier {
     vibrateOnButtonClick();
     print(currentPageAkaCurrentAyah);
 
-    controller.nextPage(
+    pageController.nextPage(
       duration: const Duration(milliseconds: 1),
       curve: Curves.linear,
     );
@@ -49,9 +53,20 @@ class JuzScreenModel with ChangeNotifier {
   void onBackwardButtonClicked() {
     print('hi');
     vibrateOnButtonClick();
-    controller.previousPage(
+    pageController.previousPage(
       duration: const Duration(milliseconds: 1),
       curve: Curves.linear,
     );
+  }
+
+  void onExitButtonClicked(context, JuzProgressProvider juzProgressModel) {
+    var progress = pageController.page!.toDouble() / total;
+    juzProgressModel.updateJuzData(
+      juzNumber,progress
+    );
+    Navigator.  pop(
+      context,
+    );
+    print('exit');
   }
 }

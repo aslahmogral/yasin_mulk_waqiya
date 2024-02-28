@@ -1,5 +1,5 @@
-import 'package:daily_quran/screens/juz_section/juz_screen/juz_screen.dart';
-import 'package:daily_quran/screens/surah_screen/surah_screen.dart';
+import 'package:daily_quran/juz_section/juz_screen/juz_screen.dart';
+import 'package:daily_quran/references/screens/surah_screen/surah_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -10,6 +10,7 @@ class juzCardModel with ChangeNotifier {
   // late Box surahbox;
   late int juzNumber;
   // late String boxName;
+  
 
   juzCardModel(int surahNumber, ) {
     this.juzNumber = surahNumber;
