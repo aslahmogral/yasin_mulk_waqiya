@@ -17,7 +17,7 @@ class JuzScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => JuzScreenModel(juzNumber)),
+        ChangeNotifierProvider(create: (_) => JuzScreenModel(juzNumber,context)),
       ],
       child: Consumer<JuzScreenModel>(builder: (context, model, child) {
         return WillPopScope(

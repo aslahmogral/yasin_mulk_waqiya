@@ -25,7 +25,8 @@ class JuzCard extends StatelessWidget {
         // var versesLeft = quran.getVerseCount(surahNumber) - model.currentAyah;
         return Consumer<JuzProgressProvider>(
             builder: (context, juzProgressModel, child) {
-          double progress = juzProgressModel.getJuzData(juzNumber);
+          // double progress = juzProgressModel.getJuzData(juzNumber);
+          double progress = juzProgressModel.getJuzProgress(juzNumber);
           bool isJuzNotStarted = progress != 0.0;
           return Padding(
             padding: const EdgeInsets.all(8.0),
