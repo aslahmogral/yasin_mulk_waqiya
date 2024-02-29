@@ -1,6 +1,7 @@
 import 'package:daily_quran/juz_section/juz_provider.dart';
 import 'package:daily_quran/juz_section/juz_screen/juz_screen_mode.dart';
 import 'package:daily_quran/references/screens/surah_screen/surah_screen_model.dart';
+import 'package:daily_quran/utils/utils.dart';
 import 'package:daily_quran/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,8 @@ class JuzScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => JuzScreenModel(juzNumber,context)),
+        ChangeNotifierProvider(
+            create: (_) => JuzScreenModel(juzNumber, context)),
       ],
       child: Consumer<JuzScreenModel>(builder: (context, model, child) {
         return WillPopScope(
@@ -163,7 +165,8 @@ class JuzScreen extends StatelessWidget {
       required int ayahNumber,
       required int surahLastAyahNumber,
       required double progressIndicator}) {
-    var percentage = progressIndicator * 100;
+    var percentage = Utils().calculatePercentage(progressIndicator);
+    // var percentage = progressIndicator * 100;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -254,7 +257,7 @@ class JuzScreen extends StatelessWidget {
     //   }
     // });
     int currentCountInJuz = 0;
-    
+
     // int totalAyahsInJuz = 155;
 
     model.juzMap.values.forEach((value) {
@@ -277,7 +280,7 @@ class JuzScreen extends StatelessWidget {
       for (int i = ayahList[0]; i <= ayahList[1]; i++) {
         currentCountInJuz++;
         var trackProgress = currentCountInJuz / model.total;
-        model.progressIndicator = trackProgress;  
+        model.progressIndicator = trackProgress;
 
         finalList.add(
           Column(

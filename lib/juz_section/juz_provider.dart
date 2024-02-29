@@ -40,7 +40,7 @@ class JuzProgressProvider extends ChangeNotifier {
   }
 
   // Method to get Juz current page
-  int getJuzCurrentPage(int juzNumber) {
+  int  getJuzCurrentPage(int juzNumber) {
     return _globalJuzMap.containsKey(juzNumber)
         ? _globalJuzMap[juzNumber]!.currentPage
         : 0;

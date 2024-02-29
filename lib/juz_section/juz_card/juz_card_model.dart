@@ -10,6 +10,8 @@ class juzCardModel with ChangeNotifier {
   // late Box surahbox;
   late int juzNumber;
   // late String boxName;
+
+  
   
 
   juzCardModel(int surahNumber, ) {
