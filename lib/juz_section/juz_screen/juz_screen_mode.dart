@@ -13,12 +13,12 @@ class JuzScreenModel with ChangeNotifier {
   double progressIndicator = 0.0;
   double total = 0.0;
 
-  JuzScreenModel(juzNumber,context) {
-    
+  JuzScreenModel(juzNumber, context) {
     juzMap = getSurahAndVersesFromJuz(juzNumber);
 
     this.juzNumber = juzNumber;
-    pageController = PageController(initialPage:getCurrentPageNumber(context, juzNumber) );
+    pageController =
+        PageController(initialPage: getCurrentPageNumber(context, juzNumber));
     // juzMap.forEach((key, value) {
     //   // finalList.add(Text(basmala));
     //   for (int i = value[0]; i <= value[1]; i++) {
@@ -41,8 +41,9 @@ class JuzScreenModel with ChangeNotifier {
 
   int getCurrentPageNumber(BuildContext context, int juzNumber) {
     // Get an instance of JuzProgressProvider
-    final juzProvider = Provider.of<JuzProgressProvider>(context, listen: false);
-    
+    final juzProvider =
+        Provider.of<JuzProgressProvider>(context, listen: false);
+
     // Use the getJuzCurrentPage method from JuzProgressProvider
     return juzProvider.getJuzCurrentPage(juzNumber);
   }
@@ -82,5 +83,10 @@ class JuzScreenModel with ChangeNotifier {
       context,
     );
     print('exit');
+  }
+
+  skip() {
+    pageController.jumpToPage(141);
+    notifyListeners();
   }
 }

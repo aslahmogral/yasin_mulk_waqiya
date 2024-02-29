@@ -189,10 +189,15 @@ class JuzScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            '$surahkey. ${quran.getSurahName(surahkey)}',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                          InkWell(
+                            onTap: () {
+                              model.skip();
+                            },
+                            child: Text(
+                              '$surahkey. ${quran.getSurahName(surahkey)}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
                           ),
                           // Text('$ayahNumber'),
                         ],

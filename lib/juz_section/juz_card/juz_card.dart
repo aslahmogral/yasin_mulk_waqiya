@@ -47,8 +47,10 @@ class JuzCard extends StatelessWidget {
                   juzProgressModel.resetSelectedJuzProgress(juzNumber);
                 },
                 child: badges.Badge(
-                  badgeAnimation:!isJuzFinished ? badges.BadgeAnimation.scale(loopAnimation: true): badges.BadgeAnimation.scale(),
-                  badgeContent: !isJuzFinished
+                  // badgeAnimation: !isJuzFinished
+                  //     ? badges.BadgeAnimation.scale(loopAnimation: true)
+                  //     : badges.BadgeAnimation.scale(),
+                  badgeContent: !isJuzFinished && isJuzStarted
                       ? Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Text(
@@ -61,8 +63,9 @@ class JuzCard extends StatelessWidget {
                         )
                       : Icon(Icons.check),
                   badgeStyle: badges.BadgeStyle(
-                    
-                    shape:isJuzFinished ? badges.BadgeShape.instagram: badges.BadgeShape.circle,
+                      shape: isJuzFinished
+                          ? badges.BadgeShape.instagram
+                          : badges.BadgeShape.circle,
                       badgeColor: isJuzFinished ? Colors.green : Colors.red),
                   showBadge: isJuzStarted,
                   child: Container(
@@ -76,99 +79,97 @@ class JuzCard extends StatelessWidget {
                               horizontal: 4, vertical: 8),
                           child: isJuzStarted
                               ? isJuzFinished
-                                  ? badges.Badge(
-                                      badgeContent: Icon(Icons.check),
-                                      showBadge: false,
-                                      // count: percentage,
-                                      
-                                      child: Container(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: [
-                                              CircleAvatar(
-                                                child: Text(
-                                                  '$juzNumber',
-                                                  style: TextStyle(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                backgroundColor: Color.fromARGB(
-                                                    255, 9, 176, 15),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : Badge(
-                                      label: Text('${percentage.toInt()} %'),
-                                      isLabelVisible: false,
-                                      // !isJuzFinished && isJuzStarted,
-                                      textColor: Colors.white,
-                                      child: Container(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: [
-                                              CircleAvatar(
-                                                child: Text(
-                                                  '$juzNumber',
-                                                  style: TextStyle(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                backgroundColor:
-                                                    AppColors.seconderyColor,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-
-                                        // title: Text(
-                                        //   // quran.getSurahName(juzNumber),
-                                        //   juzNumber.toString(),
-                                        //   style: TextStyle(
-                                        //       color: Colors.white,
-                                        //       fontWeight: FontWeight.bold),
-                                        // ),
-                                        // trailing: Row(
-                                        //   mainAxisSize: MainAxisSize.min,
-                                        //   children: [
-                                        //     typeOfChipMethod(model.status, model),
-                                        //     moreSectionInListTile(context, model)
-                                        //   ],
-                                        // ),
-                                      ),
-                                    )
-                              : Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        CircleAvatar(
-                                            child: Text(
-                                              '$juzNumber',
-                                              style: TextStyle(
-                                                  color: Colors.white70,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            backgroundColor: Colors.black26
-                                            // backgroundColor:
-                                            //     AppColors.pri,
-                                            ),
-                                      ],
-                                    ),
-                                  ),
-                                ))),
+                                  ? completedCard()
+                                  : ContinueCard(percentage)
+                              : notStartedCard())),
                 )),
           );
         });
       }),
+    );
+  }
+
+  Container notStartedCard() {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            CircleAvatar(
+                child: Text(
+                  '$juzNumber',
+                  style: TextStyle(
+                      color: Colors.white70, fontWeight: FontWeight.bold),
+                ),
+                backgroundColor: Colors.black26
+                // backgroundColor:
+                //     AppColors.pri,
+                ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Badge ContinueCard(int percentage) {
+    return Badge(
+      label: Text('${percentage.toInt()} %'),
+      isLabelVisible: false,
+      // !isJuzFinished && isJuzStarted,
+      textColor: Colors.white,
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              CircleAvatar(
+                child: Text(
+                  '$juzNumber',
+                  style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                backgroundColor: AppColors.seconderyColor,
+              ),
+            ],
+          ),
+        ),
+
+        // title: Text(
+        //   // quran.getSurahName(juzNumber),
+        //   juzNumber.toString(),
+        //   style: TextStyle(
+        //       color: Colors.white,
+        //       fontWeight: FontWeight.bold),
+        // ),
+        // trailing: Row(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        //     typeOfChipMethod(model.status, model),
+        //     moreSectionInListTile(context, model)
+        //   ],
+        // ),
+      ),
+    );
+  }
+
+  Container completedCard() {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            CircleAvatar(
+              child: Text(
+                '$juzNumber',
+                style: TextStyle(
+                    color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Color.fromARGB(255, 9, 176, 15),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
