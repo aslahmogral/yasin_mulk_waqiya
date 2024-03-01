@@ -311,11 +311,44 @@ class JuzScreen extends StatelessWidget {
       // Summing up the values
     });
     List<Widget> surahsInJuz = [];
+    int juzMapLength = model.juzMap.keys.toList().length;
+
+    print('=====================$juzMapLength');
+    int keyCount = 0;
     model.juzMap.forEach((key, value) {
-      surahsInJuz.add(Text(
-        '$key - ${quran.getSurahName(key)} ${value[0]} to ${value[1]} ',
-        style: TextStyle(fontSize: 10),
-      ));
+      keyCount++;
+      String surahInfo = '${value[0]} to ${value[1]}';
+      // Chip(label: )
+      surahsInJuz.add(Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                '$key - ${quran.getSurahName(key)} ${juzMapLength == keyCount ? surahInfo  : ''}',
+                style: TextStyle(fontSize: 8),
+              ),
+            ),
+            decoration: BoxDecoration(
+              // color: Colors.blue,
+              borderRadius:
+                  BorderRadius.circular(10), // Adjust the corner radius
+              border: Border.all(
+                color: Colors.black45, // Change this color
+                width: 0.5, // Adjust the border thickness
+              ),
+            ),
+          )
+
+          // Chip(
+          //   padding: EdgeInsets.zero,
+          //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          //   label: Text(
+          //     '$key - ${quran.getSurahName(key)} ${juzMapLength == keyCount ? surahInfo  : ''}',
+          //     style: TextStyle(fontSize: 8),
+          //   ),
+          // ),
+          ));
     });
 
     List<Widget> finalList = [];
@@ -338,21 +371,24 @@ class JuzScreen extends StatelessWidget {
                   surahLastAyahNumber: ayahList[1],
                   progressIndicator: trackProgress,
                   surahsInJuz: surahsInJuz),
-                   Container(
-                        height: 30,
-                        child: Scrollbar(
-                          thickness: 1,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ...surahsInJuz,
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+              SizedBox(
+                height: 6,
+              ),
+              Container(
+                height: 30,
+                child: Scrollbar(
+                  thickness: 1,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ...surahsInJuz,
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(height: 16),
               // Text('$verseLeft Verses Left'),
               SizedBox(height: 16),
@@ -387,7 +423,8 @@ class JuzScreen extends StatelessWidget {
                                                   'assets/bismillah.png'),
                                             Card(
                                               child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
+                                                padding:
+                                                    const EdgeInsets.all(16.0),
                                                 child: Text(
                                                   '${quran.getVerse(surahKey, i)} ${quran.getVerseEndSymbol(i)}',
                                                   textAlign: TextAlign.center,
