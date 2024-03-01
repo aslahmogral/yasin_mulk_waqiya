@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quran/quran.dart' as quran;
 import 'package:daily_quran/utils/colors.dart';
+import 'package:badges/badges.dart' as badges;
 
 class JuzScreen extends StatelessWidget {
   final juzNumber;
@@ -164,7 +165,8 @@ class JuzScreen extends StatelessWidget {
       {required int surahkey,
       required int ayahNumber,
       required int surahLastAyahNumber,
-      required double progressIndicator}) {
+      required double progressIndicator,
+      required List surahsInJuz}) {
     var percentage = Utils().calculatePercentage(progressIndicator);
     // var percentage = progressIndicator * 100;
     return Column(
@@ -180,27 +182,56 @@ class JuzScreen extends StatelessWidget {
               bottom: 0,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              model.skip();
-                            },
-                            child: Text(
-                              '$surahkey. ${quran.getSurahName(surahkey)}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
+                    Text(
+                      quran.getVerseEndSymbol(juzNumber),
+                      style: TextStyle(fontSize: 22),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  model.skip();
+                                },
+                                child: Text(
+                                  '$surahkey. ${quran.getSurahName(surahkey)}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                              ),
+                              // Text('$ayahNumber'),
+                            ],
                           ),
-                          // Text('$ayahNumber'),
-                        ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: badges.Badge(
+                        badgeContent: Text(
+                          '$percentage %',
+                          style: TextStyle(
+                              fontSize: 6, fontWeight: FontWeight.bold),
+                        ),
+                        badgeStyle: badges.BadgeStyle(
+                            badgeColor: AppColors.seconderyColor),
+                        child: LinearProgressIndicator(
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.primaryColor,
+                          backgroundColor:
+                              AppColors.seconderyColor.withOpacity(0.5),
+                          // minHeight: 20,
+                          value: model.progressIndicator,
+                        ),
                       ),
                     ),
                   ],
@@ -209,43 +240,47 @@ class JuzScreen extends StatelessWidget {
             ),
           ],
         ),
-        Stack(
-          children: [
-            LinearProgressIndicator(
-              color: AppColors.primaryColor,
-              backgroundColor: AppColors.seconderyColor.withOpacity(0.5),
-              minHeight: 20,
-              value: model.progressIndicator,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    width: 10,
-                  ),
-                ),
-                Text(
-                  ' (${ayahNumber}/${surahLastAyahNumber})',
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      backgroundColor: AppColors.primaryColor.withOpacity(0.5)),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  ' ${percentage.toInt()} % ',
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white,
-                      backgroundColor: AppColors.primaryColor.withOpacity(0.5)),
-                ),
-              ],
-            )
-          ],
-        )
+        // Stack(
+        //   children: [
+        //     // LinearProgressIndicator(
+        //     //   color: AppColors.primaryColor,
+        //     //   backgroundColor: AppColors.seconderyColor.withOpacity(0.5),
+        //     //   // minHeight: 20,
+        //     //   value: model.progressIndicator,
+        //     // ),
+        //     Row(
+        //       children: [
+        //         // Expanded(
+        //         //   child: SizedBox(
+        //         //     width: 10,
+        //         //   ),
+        //         // ),
+        //         // Padding(
+        //         //   padding: const EdgeInsets.all(8.0),
+        //         //   child: Column(
+        //         //     crossAxisAlignment: CrossAxisAlignment.start,
+        //         //     children: [
+        //         //       Container(
+        //         //         height: 50,
+        //         //         child: SingleChildScrollView(
+        //         //           child: Column(
+        //         //             mainAxisSize: MainAxisSize.min,
+        //         //             children: [
+        //         //               ...surahsInJuz,
+        //         //             ],
+        //         //           ),
+        //         //         ),
+        //         //       ),
+        //         //       SizedBox(
+        //         //         width: 10,
+        //         //       ),
+        //         //     ],
+        //         //   ),
+        //         // ),
+        //       ],
+        //     )
+        //   ],
+        // )
       ],
     );
   }
@@ -275,6 +310,13 @@ class JuzScreen extends StatelessWidget {
       }
       // Summing up the values
     });
+    List<Widget> surahsInJuz = [];
+    model.juzMap.forEach((key, value) {
+      surahsInJuz.add(Text(
+        '$key - ${quran.getSurahName(key)} ${value[0]} to ${value[1]} ',
+        style: TextStyle(fontSize: 10),
+      ));
+    });
 
     List<Widget> finalList = [];
     bool isSurahFirstAyah = false;
@@ -294,7 +336,23 @@ class JuzScreen extends StatelessWidget {
                   surahkey: surahKey,
                   ayahNumber: i,
                   surahLastAyahNumber: ayahList[1],
-                  progressIndicator: trackProgress),
+                  progressIndicator: trackProgress,
+                  surahsInJuz: surahsInJuz),
+                   Container(
+                        height: 30,
+                        child: Scrollbar(
+                          thickness: 1,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ...surahsInJuz,
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
               SizedBox(height: 16),
               // Text('$verseLeft Verses Left'),
               SizedBox(height: 16),
@@ -328,7 +386,7 @@ class JuzScreen extends StatelessWidget {
                                               Image.asset(
                                                   'assets/bismillah.png'),
                                             Text(
-                                              quran.getVerse(surahKey, i),
+                                              '${quran.getVerse(surahKey, i)} ${quran.getVerseEndSymbol(i)}',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 height: 2,

@@ -35,7 +35,7 @@ class JuzCard extends StatelessWidget {
 
           //here i have added +1 because percentage shows to be 1 less eventhough it is correct inside juzSreen(quick fix)
           var percentage = Utils().calculatePercentage(progress) + 1;
-          bool isJuzFinished = percentage == 100.0;
+          bool isJuzFinished = percentage >= 100.0;
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
