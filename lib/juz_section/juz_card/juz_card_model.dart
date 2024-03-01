@@ -10,14 +10,19 @@ class juzCardModel with ChangeNotifier {
   // late Box surahbox;
   late int juzNumber;
   // late String boxName;
+  bool shouldReset = false;
 
-  
-  
-
-  juzCardModel(int surahNumber, ) {
+  juzCardModel(
+    int surahNumber,
+  ) {
     this.juzNumber = surahNumber;
     // this.boxName = boxName;
     // initBox(surahNumber);
+  }
+
+  void updateShouldReset(bool value) {
+    shouldReset = value;
+    notifyListeners();
   }
 
   // initBox(int surahNumber) async {
@@ -63,8 +68,8 @@ class juzCardModel with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => JuzScreen(juzNumber:juzNumber,
-           
+          builder: (context) => JuzScreen(
+            juzNumber: juzNumber,
           ),
         ));
 

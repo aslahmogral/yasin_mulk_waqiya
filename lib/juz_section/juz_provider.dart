@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Define a model class to represent Juz data
 class JuzData {
@@ -9,53 +10,85 @@ class JuzData {
 }
 
 class JuzProgressProvider extends ChangeNotifier {
-  // Global map to store Juz data
   late Map<int, JuzData> _globalJuzMap;
+  late SharedPreferences _prefs;
 
-  // Constructor to initialize the global Juz map
   JuzProgressProvider() {
     _initializeJuzMap();
+    _initSharedPreferences();   
   }
 
-  // Method to initialize the global Juz map
   void _initializeJuzMap() {
     _globalJuzMap = {
       for (int i = 1; i <= 30; i++) i: JuzData(progress: 0.0, currentPage: 0),
     };
   }
 
-  // Method to update Juz progress
+  void _initSharedPreferences() async {
+    _prefs = await SharedPreferences.getInstance();
+    _loadJuzProgressFromStorage();
+  }
+
+  // void _loadJuzProgressFromStorage() {
+  //   for (int i = 1; i <= 30; i++) {
+  //     double progress = _prefs.getDouble('juz_${i}_progress') ?? 0.0;
+  //     int currentPage = _prefs.getInt('juz_${i}_currentPage') ?? 0;
+  //     _globalJuzMap[i] = JuzData(progress: progress, currentPage: currentPage);
+  //   }
+  // }
+
+  // void _saveJuzProgressToStorage(int juzNumber, double progress, int currentPage) {
+  //   _prefs.setDouble('juz_${juzNumber}_progress', progress);
+  //   _prefs.setInt('juz_${juzNumber}_currentPage', currentPage);
+  // }
+
+  void _saveJuzProgressToStorage(
+      int juzNumber, double progress, int currentPage) {
+    _prefs.setDouble('juz_$juzNumber' '_progress', progress);
+    _prefs.setInt('juz_$juzNumber' '_currentPage', currentPage);
+  }
+
+  void _loadJuzProgressFromStorage() {
+    for (int i = 1; i <= 30; i++) {
+      double progress = _prefs.getDouble('juz_$i' '_progress') ?? 0.0;
+      int currentPage = _prefs.getInt('juz_$i' '_currentPage') ?? 0;
+      _globalJuzMap[i] = JuzData(progress: progress, currentPage: currentPage);
+    }
+    notifyListeners();
+  }        
+  
   void updateJuzProgress(int juzNumber, double progress, int currentPage) {
     if (_globalJuzMap.containsKey(juzNumber)) {
-      _globalJuzMap[juzNumber] = JuzData(progress: progress, currentPage: currentPage);
-      notifyListeners(); // Notify listeners about the data change
+      _globalJuzMap[juzNumber] =
+          JuzData(progress: progress, currentPage: currentPage);
+      _saveJuzProgressToStorage(juzNumber, progress, currentPage);
+      notifyListeners();
     }
   }
 
-  // Method to get Juz progress
   double getJuzProgress(int juzNumber) {
     return _globalJuzMap.containsKey(juzNumber)
         ? _globalJuzMap[juzNumber]!.progress
         : 0.0;
   }
 
-  // Method to get Juz current page
-  int  getJuzCurrentPage(int juzNumber) {
+  int getJuzCurrentPage(int juzNumber) {
     return _globalJuzMap.containsKey(juzNumber)
         ? _globalJuzMap[juzNumber]!.currentPage
         : 0;
   }
 
-  // Method to reset progress for all Juz
   void resetAllJuzProgress() {
-    _initializeJuzMap(); // Reinitialize the map with default progress values
+    _initializeJuzMap();
+    _prefs.clear(); // Clear SharedPreferences to reset the saved data
     notifyListeners();
   }
 
-  // Method to reset progress for a selected Juz
   void resetSelectedJuzProgress(int juzNumber) {
     if (_globalJuzMap.containsKey(juzNumber)) {
       _globalJuzMap[juzNumber] = JuzData(progress: 0.0, currentPage: 0);
+      _saveJuzProgressToStorage(
+          juzNumber, 0.0, 0); // Save reset progress to SharedPreferences
       notifyListeners();
     }
   }

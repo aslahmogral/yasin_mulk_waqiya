@@ -11,6 +11,7 @@ class SurahListModel with ChangeNotifier {
   bool isSurahLoading = false;
   // var index;
   List<Widget> finalList = [];
+  bool shouldReset = false;
 
   // Future<void> clearProgressButtonClicked() async {
   //   Box box = await Hive.openBox('box');
@@ -22,6 +23,11 @@ class SurahListModel with ChangeNotifier {
     // this.index = index;
     initDailySurahs();
     // switchSurahList(index);
+  }
+
+  void updateShouldReset(bool value) {
+    shouldReset = value;
+    notifyListeners();
   }
 
   initDailySurahs() {
@@ -52,7 +58,6 @@ class SurahListModel with ChangeNotifier {
       );
     }
 
-    
     // switchSurahList();
     isSurahLoading = false;
 

@@ -37,20 +37,20 @@ class _JuzIndexScreenState extends State<JuzIndexScreen> {
             centerTitle: true,
             backgroundColor: AppColors.primaryColor,
             title: Text(
-              'Daily Quran',
+              'Khathmul Quran',
               style: TextStyle(
                   fontWeight: FontWeight.bold, color: AppColors.seconderyColor),
             ),
             actions: [
-              Consumer<JuzProgressProvider>(
-                  builder: (context, juzProgressModel, child) {
-                return IconButton(
-                    onPressed: () {
-                      juzProgressModel.resetAllJuzProgress();
-                    },
-                    icon: Icon(Icons.reset_tv));
-              }),
-              Icon(Icons.more_vert),
+              // Consumer<JuzProgressProvider>(
+              //     builder: (context, juzProgressModel, child) {
+              //   return IconButton(
+              //       onPressed: () {
+              //         juzProgressModel.resetAllJuzProgress();
+              //       },
+              //       icon: Icon(Icons.reset_tv));
+              // }),
+              // Icon(Icons.more_vert),
             ],
           ),
           body: SingleChildScrollView(
@@ -61,26 +61,50 @@ class _JuzIndexScreenState extends State<JuzIndexScreen> {
                 : Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 16),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount:
-                            4, // You can adjust the number of columns as needed
-                        crossAxisSpacing: 1.0,
-                        mainAxisSpacing: 1.0,
-                      ),
-                      itemCount: model.juzList.length,
-                      shrinkWrap: true,
-                      physics:
-                          NeverScrollableScrollPhysics(), // to prevent scrolling of GridView within SingleChildScrollView
-                      itemBuilder: (context, index) {
-                        return GridTile(
-                          child: Container(
-                            // Your content for each grid item here
-                            child: model.juzList[
-                                index], // Replace YourWidget with your actual widget
+                    child: Column(
+                      children: [
+                        GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                4, // You can adjust the number of columns as needed
+                            crossAxisSpacing: 1.0,
+                            mainAxisSpacing: 1.0,
                           ),
-                        );
-                      },
+                          itemCount: model.juzList.length,
+                          shrinkWrap: true,
+                          physics:
+                              NeverScrollableScrollPhysics(), // to prevent scrolling of GridView within SingleChildScrollView
+                          itemBuilder: (context, index) {
+                            return GridTile(
+                              child: Container(
+                                // Your content for each grid item here
+                                child: model.juzList[
+                                    index], // Replace YourWidget with your actual widget
+                              ),
+                            );
+                          },
+                        ),
+                        ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  AppColors.primaryColor),
+                            ),
+                            onPressed: () {
+                              resetButtonClicked(context, model);
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'RESET',
+                                  style: TextStyle(
+                                      color: AppColors.seconderyColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ))
+                      ],
                     ),
                   ),
           ),
@@ -88,4 +112,93 @@ class _JuzIndexScreenState extends State<JuzIndexScreen> {
       }),
     );
   }
+
+  Future<dynamic> resetButtonClicked(
+      BuildContext context, SurahListModel model) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: StatefulBuilder(builder: (thisLowerContext, innerSetState) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Checkbox(
+                        value: model.shouldReset,
+                        onChanged: (val) {
+                          innerSetState(() {
+                            model.updateShouldReset(val!);
+                          });
+                        }),
+                    Column(
+                      children: [
+                        Text('Are you Sure '),
+                        Text('You Want to Reset ???')
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Consumer<JuzProgressProvider>(
+                    builder: (context, juzProgressModel, child) {
+                  return Column(
+                    children: [
+                      Visibility(
+                        visible: !model.shouldReset,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                AppColors.seconderyColor),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Close',
+                            style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.shouldReset,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(AppColors.primaryColor),
+                          ),
+                          onPressed: () {
+                            if (model.shouldReset) {}
+                            juzProgressModel.resetAllJuzProgress();
+                            innerSetState(() {
+                              model.updateShouldReset(false);
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'RESET',
+                            style: TextStyle(
+                                color: AppColors.seconderyColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                })
+              ],
+            );
+          }),
+        );
+      },
+    );
+  }
+
+
 }

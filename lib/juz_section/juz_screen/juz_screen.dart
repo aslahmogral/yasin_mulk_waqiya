@@ -325,7 +325,7 @@ class JuzScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Text(
-                '$key - ${quran.getSurahName(key)} ${juzMapLength == keyCount ? surahInfo  : ''}',
+                '$key - ${quran.getSurahName(key)} ${juzMapLength == keyCount ? surahInfo : ''}',
                 style: TextStyle(fontSize: 8),
               ),
             ),

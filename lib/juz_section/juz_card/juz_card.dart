@@ -44,7 +44,8 @@ class JuzCard extends StatelessWidget {
                   await model.onListTileClicked(context, model);
                 },
                 onLongPress: () {
-                  juzProgressModel.resetSelectedJuzProgress(juzNumber);
+                  // juzProgressModel.resetSelectedJuzProgress(juzNumber);
+                  resetButtonClicked(context, model);
                 },
                 child: badges.Badge(
                   // badgeAnimation: !isJuzFinished
@@ -108,6 +109,94 @@ class JuzCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Future<dynamic> resetButtonClicked(BuildContext context, juzCardModel model) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: StatefulBuilder(builder: (thisLowerContext, innerSetState) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Checkbox(
+                        value: model.shouldReset,
+                        onChanged: (val) {
+                          innerSetState(() {
+                            model.updateShouldReset(val!);
+                          });
+                        }),
+                    Column(
+                      children: [
+                        Text('Are you Sure '),
+                        Text('You Want to Reset ???')
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Consumer<JuzProgressProvider>(
+                    builder: (context, juzProgressModel, child) {
+                  return Column(
+                    children: [
+                      Visibility(
+                        visible: !model.shouldReset,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                AppColors.primaryColor),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Close',
+                            style: TextStyle(
+                                color: AppColors.seconderyColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.shouldReset,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                AppColors.primaryColor),
+                          ),
+                          onPressed: () {
+                            if (model.shouldReset) {}
+                            // juzProgressModel.resetAllJuzProgress();
+                            juzProgressModel
+                                .resetSelectedJuzProgress(juzNumber);
+                            innerSetState(() {
+                              model.updateShouldReset(false);
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'RESET',
+                            style: TextStyle(
+                                color: AppColors.seconderyColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                })
+              ],
+            );
+          }),
+        );
+      },
     );
   }
 
