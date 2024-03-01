@@ -369,9 +369,9 @@ class JuzScreen extends StatelessWidget {
                             child: Container(
                               color: Colors.transparent,
                               child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
+                                // width: MediaQuery.of(context).size.width * 0.8,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -385,14 +385,19 @@ class JuzScreen extends StatelessWidget {
                                                 surahKey != 1)
                                               Image.asset(
                                                   'assets/bismillah.png'),
-                                            Text(
-                                              '${quran.getVerse(surahKey, i)} ${quran.getVerseEndSymbol(i)}',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                height: 2,
-                                                fontFamily: 'AmiriQuran',
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 28,
+                                            Card(
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text(
+                                                  '${quran.getVerse(surahKey, i)} ${quran.getVerseEndSymbol(i)}',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    height: 2,
+                                                    fontFamily: 'AmiriQuran',
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 28,
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                             SizedBox(
