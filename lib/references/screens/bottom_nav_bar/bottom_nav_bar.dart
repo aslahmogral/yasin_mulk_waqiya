@@ -25,12 +25,12 @@ class BottomNavBar extends StatelessWidget {
               currentIndex: model.currentIndex,
               items: [
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.bookmark), label: 'Favourite Surahs'),
+                    icon: Icon(Icons.bookmark), label: 'Surahs'),
                 BottomNavigationBarItem(
                     icon: Icon(
                       Icons.book_sharp,
                     ),
-                    label: 'All Surahs')
+                    label: 'Juz')
               ]),
         );
       }),

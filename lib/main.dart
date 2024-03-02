@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
           // home: BottomNavBar()),
           // home: TestScreen()),
-          home: JuzIndexScreen()),
+          home: BottomNavBar()),
     );
   }
 }

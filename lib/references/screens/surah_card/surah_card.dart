@@ -38,60 +38,63 @@ class SurahTile extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                     child: model.status != 'continue'
-                        ? ListTile(
-                            leading: CircleAvatar(
-                              child: Text(
-                                '$surahNumber',
-                                style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              backgroundColor: AppColors.seconderyColor,
-                            ),
-                            title: Text(
-                              quran.getSurahName(surahNumber),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                typeOfChipMethod(model.status, model),
-                                moreSectionInListTile(context, model)
-                              ],
-                            ),
-                          )
-                        : ListTile(
-                            leading: CircleAvatar(
-                              child: Text(
-                                '$surahNumber',
-                                style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              backgroundColor: AppColors.seconderyColor,
-                            ),
-                            title: Text(
-                              quran.getSurahName(surahNumber),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(
-                              "$versesLeft verses left ",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                typeOfChipMethod(model.status, model),
-                                moreSectionInListTile(context, model)
-                              ],
-                            ))),
+                        ? notReadSurahCard(model, context)
+                        : currentlyReadingCard(versesLeft, model, context)),
               )),
         );
       }),
+    );
+  }
+
+  ListTile currentlyReadingCard(
+      int versesLeft, surahCardModel model, BuildContext context) {
+    return ListTile(
+        leading: CircleAvatar(
+          child: Text(
+            '$surahNumber',
+            style: TextStyle(
+                color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: AppColors.seconderyColor,
+        ),
+        title: Text(
+          quran.getSurahName(surahNumber),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          "$versesLeft verses left ",
+          style: TextStyle(color: Colors.white),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            typeOfChipMethod(model.status, model),
+            moreSectionInListTile(context, model)
+          ],
+        ));
+  }
+
+  ListTile notReadSurahCard(surahCardModel model, BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(
+        child: Text(
+          '$surahNumber',
+          style: TextStyle(
+              color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: AppColors.seconderyColor,
+      ),
+      title: Text(
+        quran.getSurahName(surahNumber),
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          typeOfChipMethod(model.status, model),
+          moreSectionInListTile(context, model)
+        ],
+      ),
     );
   }
 
