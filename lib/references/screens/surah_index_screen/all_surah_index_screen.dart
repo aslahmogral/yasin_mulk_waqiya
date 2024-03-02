@@ -51,36 +51,7 @@ class _AllSurahListScreenState extends State<AllSurahListScreen> {
                       SizedBox(
                         height: 16,
                       ),
-
                       ...model.dailySurahList
-                      // SurahListTile(
-                      //   boxName: 'box',
-                      //   surahNumber: 36,
-                      // ),
-                      // SurahListTile(
-                      //   boxName: 'box',
-
-                      //   surahNumber: 67,
-                      // ),
-                      // SurahListTile(
-                      //   boxName: 'box',
-
-                      //   surahNumber: 56,
-                      // ),
-                      // SurahListTile(
-                      //   boxName: 'box',
-
-                      //   surahNumber: 18,
-                      // ),
-                      //  SurahListTile(
-                      //   surahNumber: 114,
-                      // ),
-                      // Expanded(child: SizedBox()),
-                      // RotatedBox(
-                      //     quarterTurns: 2,
-                      //     child: MyAppBar(
-                      //       children: [],
-                      //     )),
                     ],
                   ),
           ),
