@@ -1,11 +1,11 @@
 import 'package:daily_quran/juz_section/juz_provider.dart';
-import 'package:daily_quran/main_model.dart';
 import 'package:daily_quran/references/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:daily_quran/juz_section/juz_screen/juz_screen.dart';
 import 'package:daily_quran/juz_section/juz_index_screen.dart';
 // import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
 // import 'package:daily_quran/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:daily_quran/references/screens/testScreen.dart';
+import 'package:daily_quran/surah_section/surah_provider.dart';
 // import 'package:daily_quran/screens/juz_section/juz_screen.dart';
 import 'package:flutter/material.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => MainModel()),
         ChangeNotifierProvider(create: (_) => JuzProgressProvider()),
+        ChangeNotifierProvider(create: (_) => SurahProgressProvider()),
 
       ],
       child: MaterialApp(
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
           // home: BottomNavBar()),
           // home: TestScreen()),
-          home: BottomNavBar()),
+          home: JuzIndexScreen()),
     );
   }
 }

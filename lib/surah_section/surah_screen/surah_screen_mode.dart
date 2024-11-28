@@ -4,22 +4,40 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:quran/quran.dart';
 
-class JuzScreenModel with ChangeNotifier {
+class SurahScreenModel with ChangeNotifier {
   List<Widget> finalList = [];
-  Map juzMap = {};
+  Map surahMap = {};
   PageController pageController = PageController(initialPage: 0);
   var currentPageAkaCurrentAyah = 0;
-  late int juzNumber;
+  late int surahNumber;
   double progressIndicator = 0.0;
   double total = 0.0;
 
-  JuzScreenModel(juzNumber, context) {
-    juzMap = getSurahAndVersesFromJuz(juzNumber);
+  SurahScreenModel(surahNumber, context) {
+    surahMap = getSurahAndVersesFromJuz(surahNumber);
 
-    this.juzNumber = juzNumber;
+    this.surahNumber = surahNumber;
     pageController =
-        PageController(initialPage: getCurrentPageNumber(context, juzNumber));
+        PageController(initialPage: getCurrentPageNumber(context, surahNumber));
+    // juzMap.forEach((key, value) {
+    //   // finalList.add(Text(basmala));
+    //   for (int i = value[0]; i <= value[1]; i++) {
+    //     finalList.add(Text(getVerse(key, i)));
+    //   }
+    // });
   }
+
+  // void initMethod(int? previousVerse, int juzNumber) {
+  //   if (previousVerse != null) {
+  //     // currentPageAkaCurrentAyah = previousVerse;
+  //     this.juzNumber = juzNumber;
+  //   }
+  //   pageController = PageController(initialPage: currentPageAkaCurrentAyah);
+  //   pageController.addListener(() {
+  //     currentPageAkaCurrentAyah = pageController.page!.toInt();
+  //     notifyListeners();
+  //   });
+  // }
 
   int getCurrentPageNumber(BuildContext context, int juzNumber) {
     // Get an instance of JuzProgressProvider
@@ -31,6 +49,7 @@ class JuzScreenModel with ChangeNotifier {
   }
 
   vibrateOnButtonClick() {
+    // Clipboard.setData(ClipboardData(text: ''));
     HapticFeedback.lightImpact();
   }
 
@@ -56,7 +75,7 @@ class JuzScreenModel with ChangeNotifier {
   void onExitButtonClicked(context, JuzProgressProvider juzProgressModel) {
     var progress = pageController.page!.toDouble() / total;
     juzProgressModel.updateJuzProgress(
-        juzNumber, progress, pageController.page!.round());
+        surahNumber, progress, pageController.page!.round());
     Navigator.pop(
       context,
     );

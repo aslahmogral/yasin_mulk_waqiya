@@ -1,3 +1,4 @@
+import 'package:daily_quran/juz_section/juz_card/juz_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,10 +13,22 @@ class JuzData {
 class JuzProgressProvider extends ChangeNotifier {
   late Map<int, JuzData> _globalJuzMap;
   late SharedPreferences _prefs;
+  List<JuzCard> juzList = List.generate(
+    30,
+    (index) => JuzCard(
+      juzNumber: index + 1,
+    ),
+  );
+  bool shouldReset = false;
+
+  void updateShouldReset(bool value) {
+    shouldReset = value;
+    notifyListeners();
+  }
 
   JuzProgressProvider() {
     _initializeJuzMap();
-    _initSharedPreferences();   
+    _initSharedPreferences();
   }
 
   void _initializeJuzMap() {
@@ -55,8 +68,8 @@ class JuzProgressProvider extends ChangeNotifier {
       _globalJuzMap[i] = JuzData(progress: progress, currentPage: currentPage);
     }
     notifyListeners();
-  }        
-  
+  }
+
   void updateJuzProgress(int juzNumber, double progress, int currentPage) {
     if (_globalJuzMap.containsKey(juzNumber)) {
       _globalJuzMap[juzNumber] =

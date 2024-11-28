@@ -8,34 +8,32 @@ import 'package:daily_quran/utils/colors.dart';
 import 'package:badges/badges.dart' as badges;
 // import 'package:quran/quran.dart' as quran;
 
-class JuzCard extends StatelessWidget {
-  final juzNumber;
-  // final String boxName;
-  const JuzCard({
+class surahCard extends StatelessWidget {
+  final surahNumber;
+  const surahCard({
     super.key,
-    required this.juzNumber,
-    // required this.boxName,
+    required this.surahNumber,
   });
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => juzCardModel(juzNumber)),
+        ChangeNotifierProvider(create: (_) => juzCardModel(surahNumber)),
       ],
       child: Consumer<juzCardModel>(builder: (context, model, child) {
         // var versesLeft = quran.getVerseCount(surahNumber) - model.currentAyah;
         return Consumer<JuzProgressProvider>(
             builder: (context, juzProgressModel, child) {
           // double progress = juzProgressModel.getJuzData(juzNumber);
-          double progress = juzProgressModel.getJuzProgress(juzNumber);
-          bool isJuzStarted = progress != 0.0;
+          double progress = juzProgressModel.getJuzProgress(surahNumber);
+          bool isSurahStarted = progress != 0.0;
           // bool isJuzFinished = progress == 100.0;
           // var percentage = progress * 100;
 
           //here i have added +1 because percentage shows to be 1 less eventhough it is correct inside juzSreen(quick fix)
           var percentage = Utils().calculatePercentage(progress) + 1;
-          bool isJuzFinished = percentage >= 100.0;
+          bool isSurahFinished = percentage >= 100.0;
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -51,7 +49,7 @@ class JuzCard extends StatelessWidget {
                   // badgeAnimation: !isJuzFinished
                   //     ? badges.BadgeAnimation.scale(loopAnimation: true)
                   //     : badges.BadgeAnimation.scale(),
-                  badgeContent: !isJuzFinished && isJuzStarted
+                  badgeContent: !isSurahFinished && isSurahStarted
                       ? Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Text(
@@ -64,11 +62,11 @@ class JuzCard extends StatelessWidget {
                         )
                       : Icon(Icons.check),
                   badgeStyle: badges.BadgeStyle(
-                      shape: isJuzFinished
+                      shape: isSurahFinished
                           ? badges.BadgeShape.instagram
                           : badges.BadgeShape.circle,
-                      badgeColor: isJuzFinished ? Colors.green : Colors.red),
-                  showBadge: isJuzStarted,
+                      badgeColor: isSurahFinished ? Colors.green : Colors.red),
+                  showBadge: isSurahStarted,
                   child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
@@ -78,8 +76,8 @@ class JuzCard extends StatelessWidget {
                       child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 4, vertical: 8),
-                          child: isJuzStarted
-                              ? isJuzFinished
+                          child: isSurahStarted
+                              ? isSurahFinished
                                   ? completedCard()
                                   : ContinueCard(percentage)
                               : notStartedCard())),
@@ -98,7 +96,7 @@ class JuzCard extends StatelessWidget {
           children: [
             CircleAvatar(
                 child: Text(
-                  '$juzNumber',
+                  '$surahNumber',
                   style: TextStyle(
                       color: Colors.white70, fontWeight: FontWeight.bold),
                 ),
@@ -173,7 +171,7 @@ class JuzCard extends StatelessWidget {
                             if (model.shouldReset) {}
                             // juzProgressModel.resetAllJuzProgress();
                             juzProgressModel
-                                .resetSelectedJuzProgress(juzNumber);
+                                .resetSelectedJuzProgress(surahNumber);
                             innerSetState(() {
                               model.updateShouldReset(false);
                             });
@@ -211,7 +209,7 @@ class JuzCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 child: Text(
-                  '$juzNumber',
+                  '$surahNumber',
                   style: TextStyle(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.bold),
@@ -248,7 +246,7 @@ class JuzCard extends StatelessWidget {
           children: [
             CircleAvatar(
               child: Text(
-                '$juzNumber',
+                '$surahNumber',
                 style: TextStyle(
                     color: AppColors.primaryColor, fontWeight: FontWeight.bold),
               ),

@@ -21,7 +21,6 @@ class _AllSurahListScreenState extends State<AllSurahListScreen> {
       ],
       child: Consumer<SurahListModel>(
           builder: (context, SurahListModel model, child) {
-        // model.switchSurahList(widget.index);
         return Scaffold(
           backgroundColor: Color.fromARGB(255, 251, 243, 220),
           appBar: AppBar(
@@ -41,22 +40,29 @@ class _AllSurahListScreenState extends State<AllSurahListScreen> {
             ),
             actions: [Icon(Icons.more_vert)],
           ),
-          body: SingleChildScrollView(
-            child: model.isSurahLoading
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Column(
-                    children: [
-                      SizedBox(
-                        height: 16,
-                      ),
-                      ...model.dailySurahList
-                    ],
+          body: model.isSurahLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(), // Disable GridView scrolling
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 2,
+                      crossAxisSpacing: 2,
+                      childAspectRatio: 3 / 4,
+                    ),
+                    itemCount: model.dailySurahList.length,
+                    itemBuilder: (context, index) {
+                      return model.dailySurahList[index];
+                    },
                   ),
-          ),
+                ),
         );
       }),
     );
   }
 }
+

@@ -37,9 +37,7 @@ class SurahTile extends StatelessWidget {
                 child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-                    child: model.status != 'continue'
-                        ? notReadSurahCard(model, context)
-                        : currentlyReadingCard(versesLeft, model, context)),
+                    child: inactiveSurahCard())
               )),
         );
       }),
@@ -68,11 +66,66 @@ class SurahTile extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            typeOfChipMethod(model.status, model),
+            // typeOfChipMethod(model.status, model),
             moreSectionInListTile(context, model)
           ],
         ));
   }
+
+  Container inactiveSurahCard() {
+    return Container(
+      width: 80,
+      
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            CircleAvatar(
+              child: Text(
+                '$surahNumber',
+                style: TextStyle(
+                    color: Colors.white70, fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Colors.black26,
+            ),
+            SizedBox(height: 6,),
+            Text(
+          quran.getSurahName(surahNumber),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 10),
+        ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ListTile currentlyReadingCard(
+  //     int versesLeft, surahCardModel model, BuildContext context) {
+  //   return ListTile(
+  //       leading: CircleAvatar(
+  //         child: Text(
+  //           '$surahNumber',
+  //           style: TextStyle(
+  //               color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+  //         ),
+  //         backgroundColor: AppColors.seconderyColor,
+  //       ),
+  //       title: Text(
+  //         quran.getSurahName(surahNumber),
+  //         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+  //       ),
+  //       subtitle: Text(
+  //         "$versesLeft verses left ",
+  //         style: TextStyle(color: Colors.white),
+  //       ),
+  //       trailing: Row(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           typeOfChipMethod(model.status, model),
+  //           moreSectionInListTile(context, model)
+  //         ],
+  //       ));
+  // }
 
   ListTile notReadSurahCard(surahCardModel model, BuildContext context) {
     return ListTile(
@@ -91,7 +144,7 @@ class SurahTile extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          typeOfChipMethod(model.status, model),
+          // typeOfChipMethod(model.status, model),
           moreSectionInListTile(context, model)
         ],
       ),
@@ -150,4 +203,5 @@ class SurahTile extends StatelessWidget {
           color: Colors.white,
         ));
   }
+
 }
