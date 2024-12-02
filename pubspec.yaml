@@ -43,6 +43,8 @@ dependencies:
   rename: ^3.0.1
   badges: ^3.1.2
   shared_preferences: ^2.2.2
+  http: ^1.2.2
+  hijri: ^3.0.0
 
 dev_dependencies:
   flutter_test:
