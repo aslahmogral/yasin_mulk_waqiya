@@ -3,14 +3,18 @@ import 'dart:convert';
 import 'package:daily_quran/model/juz_data.dart';
 import 'package:daily_quran/widgets/juz_card/juz_card.dart';
 import 'package:flutter/material.dart';
+import 'package:jhijri/_src/_jHijri.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:http/http.dart' as http;
 
 class HomeScreenModel extends ChangeNotifier {
+  final jHijri = JHijri(fDate: DateTime.now());
   late Map<int, JuzProgress> _globalJuzMap;
   late SharedPreferences _prefs;
-  String currentMonthYear = '${DateTime.now().year},${DateTime.now().month}';
+  String currentMonthYear = '${JHijri.now().year},${JHijri.now().month}';
   int prevNextMonthCount = 0;
+  var year = JHijri.now().year;
+  var month = JHijri.now().month;
 
   List ayahs = [];
   List<JuzCard> juzList = List.generate(
@@ -32,24 +36,20 @@ class HomeScreenModel extends ChangeNotifier {
     _initSharedPreferences();
   }
   prevMonthYear() {
-    prevNextMonthCount--;
-    
+    // prevNextMonthCount--;
 
-    currentMonthYear =
-        '${DateTime.now().year},${DateTime.now().month + prevNextMonthCount}';
+    month--;
+    if (month == 0) {
+      year--;
+      month = 12;
+    }
+    currentMonthYear = '$year,$month';
+    
     notifyListeners();
     _loadJuzProgressFromStorage();
   }
 
-  nextMonthYear() {
-    if (prevNextMonthCount >= 0) {
-      return;
-    }
-    prevNextMonthCount++;
-    currentMonthYear =
-        '${DateTime.now().year},${DateTime.now().month + prevNextMonthCount}';
-    _loadJuzProgressFromStorage();
-  }
+
 
   // Future<void> getQuranTranslations(int juz) async {
   //   var url = Uri.parse(

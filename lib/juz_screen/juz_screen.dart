@@ -429,12 +429,11 @@ class JuzScreen extends StatelessWidget {
                                                 child: Text(
                                                   '${quran.getVerse(surahKey, i)} ${quran.getVerseEndSymbol(i)}',
                                                   textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    height: 2,
-                                                    fontFamily: 'AmiriQuran',
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 28,
-                                                  ),
+                                                  style: const TextStyle(
+                                                // color: Colors.white,
+                                                // fontWeight: FontWeight.bold,
+                                                fontSize: 24,
+                                                fontFamily: 'Kfgqpc',)
                                                 ),
                                               ),
                                             ),

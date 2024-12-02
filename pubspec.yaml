@@ -44,7 +44,7 @@ dependencies:
   badges: ^3.1.2
   shared_preferences: ^2.2.2
   http: ^1.2.2
-  hijri: ^3.0.0
+  jhijri: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +92,10 @@ flutter:
         - asset: fonts/AmiriQuran-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
+    - family: Kfgqpc
+      fonts:
+        - asset: fonts/Kfgqpc.ttf
+
     - family: Poppins
       fonts:
         - asset: fonts/Poppins-Light.ttf
