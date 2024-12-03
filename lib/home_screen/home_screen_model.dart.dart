@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:daily_quran/model/ayah.dart';
 import 'package:daily_quran/model/juz_data.dart';
 import 'package:daily_quran/model/surah.dart';
+import 'package:daily_quran/model/translations.dart';
 import 'package:daily_quran/widgets/juz_card/juz_card.dart';
 import 'package:flutter/material.dart';
 import 'package:jhijri/_src/_jHijri.dart';
@@ -10,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class HomeScreenModel extends ChangeNotifier {
+  bool loading = false;
   final jHijri = JHijri(fDate: DateTime.now());
   late Map<int, JuzProgress> _globalJuzMap;
   late SharedPreferences _prefs;
@@ -21,6 +23,7 @@ class HomeScreenModel extends ChangeNotifier {
   List ayahs = [];
   List juzs = [];
   List surahs = [];
+  List translations = [];
   List<JuzCard> juzList = List.generate(
     30,
     (index) => JuzCard(
@@ -36,6 +39,7 @@ class HomeScreenModel extends ChangeNotifier {
 
   HomeScreenModel() {
     getAyahs();
+    // getQuranTrans();
     _initializeJuzMap();
     _initSharedPreferences();
   }
@@ -71,11 +75,7 @@ class HomeScreenModel extends ChangeNotifier {
 
   Future<void> getQuranTranslations(int juz) async {
     var url = Uri.parse(
-        // 'https://api.quran.com/api/v4/verses/by_juz/$juz?language=en&words=true&translations=true');
-        // /verses/by_juz/$juzNumber"
         'https://api.quran.com/api/v4/quran/verses/uthmani?juz_number=$juz');
-
-        // https://api.quran.com/api/v4/verses/by_juz/:juz_number'
 
     var response = await http.get(url, headers: {'Accept': 'application/json'});
     if (response.statusCode == 200) {
@@ -88,15 +88,43 @@ class HomeScreenModel extends ChangeNotifier {
     }
   }
 
+  Future<void> getQuranTrans(int juz) async {
+    var url = Uri.parse(
+        // 'https://api.quran.com/api/v4/verses/by_juz/$juz?language=en&words=true&translations=true');
+        // /verses/by_juz/$juzNumber"
+        'https://api.quran.com/api/v4/quran/translations/131?juz_number=$juz');
+
+    // https://api.quran.com/api/v4/verses/by_juz/:juz_number'
+
+    // https://api.quran.com/api/v4/quran/translations/:translation_id?juz_number=1
+
+    var response = await http.get(url, headers: {'Accept': 'application/json'});
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      translations.add(List<Translations>.from(jsonResponse['translations']
+          .map((translation) => Translations(text: translation['text']))));
+      print('Quran verses retrieved successfully.');
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
+
   void getAyahs() async {
+    loading = true;
     for (int i = 1; i <= 30; i++) {
       await getQuranTranslations(i);
+      await getQuranTrans(i);
     }
     ayahs = juzs.expand((element) => element).toList();
-    for(int i = 1; i <= 114; i++){
-      List element = ayahs.where((ayah) => ayah.verseKey.split(':')[0] == i.toString()).toList();
+    for (int i = 1; i <= 114; i++) {
+      List element = ayahs
+          .where((ayah) => ayah.verseKey.split(':')[0] == i.toString())
+          .toList();
       surahs.add(Surah(surahNumber: i, ayahs: element));
     }
+
+    loading = false;
+    notifyListeners();
   }
 
   void _initializeJuzMap() {

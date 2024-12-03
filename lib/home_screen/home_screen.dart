@@ -19,7 +19,6 @@ class _JuzIndexScreenState extends State<JuzIndexScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 251, 243, 220),
       appBar: AppBar(
-      
         centerTitle: true,
         backgroundColor: AppColors.primaryColor,
         title: Text(
@@ -41,87 +40,93 @@ class _JuzIndexScreenState extends State<JuzIndexScreen> {
       ),
       body: Consumer<HomeScreenModel>(
           builder: (context, juzProgressModel, child) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child: Column(
-              children: [
-                Center(
-                  child: Row(mainAxisSize: MainAxisSize.min, children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          juzProgressModel.prevMonthYear();
-                        },
-                        child: Text('prev')),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            juzProgressModel.currentMonthYearKey,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Visibility(
-                            visible: JHijri.now().month == juzProgressModel.month,
-                            child: Text(
-                              '   todays juz: ${JHijri.now().day}  ',
-                              style: TextStyle(color: Colors.black),
+        return juzProgressModel.loading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Row(mainAxisSize: MainAxisSize.min, children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                juzProgressModel.prevMonthYear();
+                              },
+                              child: Text('prev')),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  juzProgressModel.currentMonthYearKey,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                Visibility(
+                                  visible: JHijri.now().month ==
+                                      juzProgressModel.month,
+                                  child: Text(
+                                    '   todays juz: ${JHijri.now().day}  ',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
+                          ElevatedButton(
+                              onPressed: () {
+                                juzProgressModel.nextMonthYear();
+                              },
+                              child: Text('next'))
+                        ]),
                       ),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          juzProgressModel.nextMonthYear();
-                        },
-                        child: Text('next'))
-                  ]),
-                ),
-                GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount:
-                        4, // You can adjust the number of columns as needed
-                    crossAxisSpacing: 1.0,
-                    mainAxisSpacing: 1.0,
-                  ),
-                  itemCount: juzProgressModel.juzList.length,
-                  shrinkWrap: true,
-                  physics:
-                      NeverScrollableScrollPhysics(), // to prevent scrolling of GridView within SingleChildScrollView
-                  itemBuilder: (context, index) {
-                    return GridTile(
-                      child: Container(
-                        // Your content for each grid item here
-                        child: juzProgressModel.juzList[
-                            index], // Replace YourWidget with your actual widget
-                      ),
-                    );
-                  },
-                ),
-                ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(AppColors.primaryColor),
-                    ),
-                    onPressed: () {
-                      resetButtonClicked(context, juzProgressModel);
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'RESET',
-                          style: TextStyle(
-                              color: AppColors.seconderyColor,
-                              fontWeight: FontWeight.bold),
+                      GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:
+                              4, // You can adjust the number of columns as needed
+                          crossAxisSpacing: 1.0,
+                          mainAxisSpacing: 1.0,
                         ),
-                      ],
-                    ))
-              ],
-            ),
-          ),
-        );
+                        itemCount: juzProgressModel.juzList.length,
+                        shrinkWrap: true,
+                        physics:
+                            NeverScrollableScrollPhysics(), // to prevent scrolling of GridView within SingleChildScrollView
+                        itemBuilder: (context, index) {
+                          return GridTile(
+                            child: Container(
+                              // Your content for each grid item here
+                              child: juzProgressModel.juzList[
+                                  index], // Replace YourWidget with your actual widget
+                            ),
+                          );
+                        },
+                      ),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                AppColors.primaryColor),
+                          ),
+                          onPressed: () {
+                            resetButtonClicked(context, juzProgressModel);
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'RESET',
+                                style: TextStyle(
+                                    color: AppColors.seconderyColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+              );
       }),
     );
   }
