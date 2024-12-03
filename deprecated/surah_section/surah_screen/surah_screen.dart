@@ -124,7 +124,7 @@ class JuzScreen extends StatelessWidget {
                       // model.warningMsgBeforeOnIAMDoneButtonClicked(
                       //   context,
                       // );
-                      model.onExitButtonClicked(context, juzProgressModel);
+                      // model.onExitButtonClicked(context, juzProgressModel);
                     },
                     child: Text(
                       'I AM DONE',

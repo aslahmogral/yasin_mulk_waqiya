@@ -55,9 +55,9 @@ class JuzScreenModel with ChangeNotifier {
     );
   }
 
-  void onExitButtonClicked(context, HomeScreenModel juzProgressModel) {
+  void onExitButtonClicked(context, HomeScreenModel homeScreenModel ,dynamic total) {
     var progress = pageController.page!.toDouble() / total;
-    juzProgressModel.updateJuzProgress(
+    homeScreenModel.updateJuzProgress(
         juzNumber, progress, pageController.page!.round());
     Navigator.pop(
       context,

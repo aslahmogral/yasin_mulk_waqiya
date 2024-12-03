@@ -1,22 +1,26 @@
 import 'dart:convert';
 
+import 'package:daily_quran/model/ayah.dart';
 import 'package:daily_quran/model/juz_data.dart';
+import 'package:daily_quran/model/surah.dart';
 import 'package:daily_quran/widgets/juz_card/juz_card.dart';
 import 'package:flutter/material.dart';
 import 'package:jhijri/_src/_jHijri.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 
 class HomeScreenModel extends ChangeNotifier {
   final jHijri = JHijri(fDate: DateTime.now());
   late Map<int, JuzProgress> _globalJuzMap;
   late SharedPreferences _prefs;
-  String currentMonthYear = '${JHijri.now().year},${JHijri.now().month}';
-  int prevNextMonthCount = 0;
+  String currentMonthYearKey = '${JHijri.now().year},${JHijri.now().month}';
   var year = JHijri.now().year;
-  var month = JHijri.now().month;
+  int month = JHijri.now().month;
+  // String currentMonthYear = '${JHijri.now().year},${JHijri.now().monthName}, ${JHijri.now().day}';
 
   List ayahs = [];
+  List juzs = [];
+  List surahs = [];
   List<JuzCard> juzList = List.generate(
     30,
     (index) => JuzCard(
@@ -35,41 +39,64 @@ class HomeScreenModel extends ChangeNotifier {
     _initializeJuzMap();
     _initSharedPreferences();
   }
-  prevMonthYear() {
-    // prevNextMonthCount--;
 
+  prevMonthYear() {
     month--;
     if (month == 0) {
       year--;
       month = 12;
     }
-    currentMonthYear = '$year,$month';
-    
+    currentMonthYearKey = '$year,$month';
+    // currentMonthYear = '${year},${JHijri(fMonth:  month).monthName}';
+
     notifyListeners();
     _loadJuzProgressFromStorage();
   }
 
+  nextMonthYear() {
+    if (currentMonthYearKey == '${JHijri.now().year},${JHijri.now().month}') {
+      return;
+    }
+    month++;
+    if (month == 13) {
+      year++;
+      month = 1;
+    }
+    currentMonthYearKey = '$year,$month';
+    // currentMonthYear = '${year},${JHijri(fMonth:  month).monthName}';
 
+    notifyListeners();
+    _loadJuzProgressFromStorage();
+  }
 
-  // Future<void> getQuranTranslations(int juz) async {
-  //   var url = Uri.parse(
-  //       'https://api.quran.com/api/v4/quran/verses/uthmani?juz_number=$juz');
+  Future<void> getQuranTranslations(int juz) async {
+    var url = Uri.parse(
+        // 'https://api.quran.com/api/v4/verses/by_juz/$juz?language=en&words=true&translations=true');
+        // /verses/by_juz/$juzNumber"
+        'https://api.quran.com/api/v4/quran/verses/uthmani?juz_number=$juz');
 
-  //   var response = await http.get(url, headers: {'Accept': 'application/json'});
-  //   if (response.statusCode == 200) {
-  //     var jsonResponse = jsonDecode(response.body);
-  //     ayahs.addAll(jsonResponse['verses']);
-  //     print('Quran verses retrieved successfully.');
-  //   } else {
-  //     print('Request failed with status: ${response.statusCode}.');
-  //   }
-  // }
+        // https://api.quran.com/api/v4/verses/by_juz/:juz_number'
+
+    var response = await http.get(url, headers: {'Accept': 'application/json'});
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      juzs.add(List<Ayah>.from(
+          jsonResponse['verses'].map((ayah) => Ayah.fromJson(ayah))));
+      print('Quran verses retrieved successfully.');
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
 
   void getAyahs() async {
     for (int i = 1; i <= 30; i++) {
-      // await getQuranTranslations(i);
+      await getQuranTranslations(i);
     }
-    print(ayahs.length);
+    ayahs = juzs.expand((element) => element).toList();
+    for(int i = 1; i <= 114; i++){
+      List element = ayahs.where((ayah) => ayah.verseKey.split(':')[0] == i.toString()).toList();
+      surahs.add(Surah(surahNumber: i, ayahs: element));
+    }
   }
 
   void _initializeJuzMap() {
@@ -105,17 +132,17 @@ class HomeScreenModel extends ChangeNotifier {
     var juzp = jsonEncode(_globalJuzMap.map((key, value) => MapEntry(
         key.toString(),
         {'progress': value.progress, 'currentPage': value.currentPage})));
-    _prefs.setString(currentMonthYear, juzp);
+    _prefs.setString(currentMonthYearKey, juzp);
   }
 
   void _loadJuzProgressFromStorage() {
-    var juzp = _prefs.getString(currentMonthYear);
+    var juzp = _prefs.getString(currentMonthYearKey);
     if (juzp == null) {
       var juzptemp = jsonEncode(_globalJuzMap.map((key, value) => MapEntry(
           key.toString(),
           {'progress': value.progress, 'currentPage': value.currentPage})));
-      _prefs.setString(currentMonthYear, juzptemp);
-      juzp = _prefs.getString(currentMonthYear);
+      _prefs.setString(currentMonthYearKey, juzptemp);
+      juzp = _prefs.getString(currentMonthYearKey);
     }
     var pro = jsonDecode(juzp!);
 

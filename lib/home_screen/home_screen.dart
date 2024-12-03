@@ -1,5 +1,6 @@
 import 'package:daily_quran/home_screen/home_screen_model.dart.dart';
 import 'package:flutter/material.dart';
+import 'package:jhijri/_src/_jHijri.dart';
 import 'package:provider/provider.dart';
 import 'package:daily_quran/utils/colors.dart';
 
@@ -18,17 +19,11 @@ class _JuzIndexScreenState extends State<JuzIndexScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 251, 243, 220),
       appBar: AppBar(
-        leading: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(Icons.account_circle),
-          ],
-        ),
+      
         centerTitle: true,
         backgroundColor: AppColors.primaryColor,
         title: Text(
-          'Khathmul Quran',
+          'Hijri Quran challenge',
           style: TextStyle(
               fontWeight: FontWeight.bold, color: AppColors.seconderyColor),
         ),
@@ -51,16 +46,38 @@ class _JuzIndexScreenState extends State<JuzIndexScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Column(
               children: [
-                Row(
-                  children: [
-                  ElevatedButton(onPressed: (){
-                    juzProgressModel.prevMonthYear();
-                  }, child: Text('prev')),
-                  Text(juzProgressModel.currentMonthYear),
-                  ElevatedButton(onPressed: (){
-                    juzProgressModel.nextMonthYear();
-                  }, child: Text('next'))
-                ]),
+                Center(
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          juzProgressModel.prevMonthYear();
+                        },
+                        child: Text('prev')),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            juzProgressModel.currentMonthYearKey,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Visibility(
+                            visible: JHijri.now().month == juzProgressModel.month,
+                            child: Text(
+                              '   todays juz: ${JHijri.now().day}  ',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          juzProgressModel.nextMonthYear();
+                        },
+                        child: Text('next'))
+                  ]),
+                ),
                 GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount:

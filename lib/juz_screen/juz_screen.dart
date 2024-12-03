@@ -16,48 +16,253 @@ class JuzScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-            create: (_) => JuzScreenModel(juzNumber, context)),
-      ],
-      child: Consumer<JuzScreenModel>(builder: (context, model, child) {
-        return WillPopScope(
-          onWillPop: () {
-            return Future(() => false);
-          },
-          child: Scaffold(
-            body: 
-            
-            PageView(
-              controller: model.pageController,
-              children: [...AyahList(context, model)],
-              physics: NeverScrollableScrollPhysics(),
-            ),
-            floatingActionButton: bottomButtons(model, context),
-            // bottomNavigationBar: Padding(
-            //   padding: const EdgeInsets.all(16.0),
-            //   child: Container(
-            //     color: Colors.transparent,
+    return Consumer<HomeScreenModel>(
+      builder: (context, HomeScreenModel, child) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+                create: (_) => JuzScreenModel(juzNumber, context)),
+          ],
+          child: Consumer<JuzScreenModel>(
+            builder: (context, model, child) {
+              return WillPopScope(
+                onWillPop: () {
+                  return Future(() => true);
+                },
+                child: Scaffold(
+                  appBar: AppBar(),
+                  body: PageView.builder(
+                      itemCount: HomeScreenModel.juzs[juzNumber - 1].length,
+                      controller: model.pageController,
+                      itemBuilder: (context, index) {
+                        var result = HomeScreenModel.juzs[juzNumber - 1][index];
+                        String ArabicText = result.text_uthmani;
+                        String verseKey =result.verseKey;
+                        String surahName = quran.getSurahName(
+                            int.parse(verseKey.split(":")[0]));
+                        String surahStartingVerse = verseKey.split(":")[1];
+                        return Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Stack(
+                            children: [
+                              SingleChildScrollView(
+                                child: Center(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Container(
+                                          // width: 30,
+                                          // height: 30,
+                                          decoration: BoxDecoration(
+                                            // color: WirdColors.primaryDaycolor,
+                                            border: Border.all(
+                                                width: 1,
+                                                color:
+                                                    WirdColors.primaryDaycolor),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(surahName),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  verseKey,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(16),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                          gradient: WirdGradients
+                                              .listTileShadeGradient,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: WirdColors.primaryDaycolor,
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Visibility(
+                                              visible: surahStartingVerse == '1',
+                                              child: Padding(
+                                                padding: const EdgeInsets.only( bottom: 8.0),
+                                                child: Text(
+                                                  '﷽',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 24,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                              ArabicText,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                // fontWeight: FontWeight.bold,
+                                                fontSize: 24,
+                                                fontFamily: 'Kfgqpc',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      // Visibility(
+                                      //   visible:
+                                      //       ThemeProvider.isTransliteration,
+                                      //   child: Container(
+                                      //       width: MediaQuery.of(context)
+                                      //           .size
+                                      //           .width,
+                                      //       decoration: BoxDecoration(
+                                      //         border: Border.all(
+                                      //           color: WirdGradients
+                                      //               .listTileShadeGradient
+                                      //               .colors
+                                      //               .last
+                                      //               .withOpacity(0.5),
+                                      //           width: 2,
+                                      //         ),
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(15),
+                                      //       ),
+                                      //       child: Padding(
+                                      //         padding:
+                                      //             const EdgeInsets.all(16.0),
+                                      //         child: Column(
+                                      //           children: [
+                                      //             Text(
+                                      //                 model.wirdList[index]
+                                      //                     .transliteration,
+                                      //                 // textAlign: TextAlign.left,
+                                      //                 style: Theme.of(context)
+                                      //                     .textTheme
+                                      //                     .headlineSmall
+                                      //                     ?.copyWith(
+                                      //                       fontSize: 16,
+                                      //                     )),
+                                      //           ],
+                                      //         ),
+                                      //       )),
+                                      // ),
+                                      // SizedBox(
+                                      //   height: 16,
+                                      // ),
+                                      // Visibility(
+                                      //   visible:
+                                      //       ThemeProvider.isEnglishTranslation,
+                                      //   child: Container(
+                                      //       decoration: BoxDecoration(
+                                      //         border: Border.all(
+                                      //           color: WirdGradients
+                                      //               .listTileShadeGradient
+                                      //               .colors
+                                      //               .last
+                                      //               .withOpacity(0.5),
+                                      //           width: 2,
+                                      //         ),
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(15),
+                                      //       ),
+                                      //       child: Padding(
+                                      //         padding:
+                                      //             const EdgeInsets.all(20.0),
+                                      //         child: Column(
+                                      //           children: [
+                                      //             // Text('TRANSLATION',
+                                      //             //     textAlign: TextAlign.center,
+                                      //             //     style: Theme.of(context)
+                                      //             //         .textTheme
+                                      //             //         .headlineSmall
+                                      //             //         ?.copyWith(
+                                      //             //             fontSize: 14,
+                                      //             //             )),
+                                      //             // SizedBox(
+                                      //             //   height: 16,
+                                      //             // ),
+                                      //             Text(
+                                      //                 model.wirdList[index]
+                                      //                     .english
+                                      //                     .replaceAll(
+                                      //                         RegExp(r'[˹˺]'),
+                                      //                         ''),
+                                      //                 textAlign: TextAlign.left,
+                                      //                 style: Theme.of(context)
+                                      //                     .textTheme
+                                      //                     .headlineSmall
+                                      //                     ?.copyWith(
+                                      //                       fontSize: 16,
+                                      //                     )),
+                                      //           ],
+                                      //         ),
+                                      //       )),
+                                      // ),
+                                      SizedBox(
+                                        height: 100,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
 
-            //     height: 180,
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                  // PageView(
+                  //   controller: model.pageController,
+                  //   children: [...AyahList(context, model)],
+                  //   physics: NeverScrollableScrollPhysics(),
+                  // ),
+                  floatingActionButton:
+                      bottomButtons(model, context, HomeScreenModel),
+                  // bottomNavigationBar: Padding(
+                  //   padding: const EdgeInsets.all(16.0),
+                  //   child: Container(
+                  //     color: Colors.transparent,
 
-            //         //right button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //       ],
-            //     ),
-            //   ),
-            // ),
+                  //     height: 180,
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                  //         //right button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                ),
+              );
+            },
           ),
         );
-      }),
+      },
     );
   }
 
-  Padding bottomButtons(JuzScreenModel model, BuildContext context) {
+  Padding bottomButtons(JuzScreenModel model, BuildContext context,
+      HomeScreenModel homeScreenModel) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -66,27 +271,28 @@ class JuzScreen extends StatelessWidget {
           SizedBox(
             width: 32,
           ),
-          model.currentPageAkaCurrentAyah == 0
-              ? QButton(
-                  buttonColor: Colors.transparent,
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.black45,
-                  ),
-                  onPressed: () {
-                    print('null');
-                    model.onBackwardButtonClicked();
-                  },
-                )
-              : QButton(
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: AppColors.seconderyColor,
-                  ),
-                  onPressed: () {
-                    model.onBackwardButtonClicked();
-                  },
-                ),
+          // false
+          //     ? QButton(
+          //         buttonColor: Colors.transparent,
+          //         child: Icon(
+          //           Icons.arrow_back_ios,
+          //           color: Colors.black45,
+          //         ),
+          //         onPressed: () {
+          //           print('null');
+          //           model.onBackwardButtonClicked();
+          //         },
+          //       )
+          //     :
+          QButton(
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: AppColors.seconderyColor,
+            ),
+            onPressed: () {
+              model.onBackwardButtonClicked();
+            },
+          ),
           //left button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           Spacer(), //middle iam done button ------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -125,7 +331,8 @@ class JuzScreen extends StatelessWidget {
                       // model.warningMsgBeforeOnIAMDoneButtonClicked(
                       //   context,
                       // );
-                      model.onExitButtonClicked(context, juzProgressModel);
+                      model.onExitButtonClicked(context, juzProgressModel,
+                          homeScreenModel.juzs[juzNumber - 1].length);
                     },
                     child: Text(
                       'I AM DONE',
@@ -427,14 +634,14 @@ class JuzScreen extends StatelessWidget {
                                                 padding:
                                                     const EdgeInsets.all(16.0),
                                                 child: Text(
-                                                  '${quran.getVerse(surahKey, i)} ${quran.getVerseEndSymbol(i)}',
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                // color: Colors.white,
-                                                // fontWeight: FontWeight.bold,
-                                                fontSize: 24,
-                                                fontFamily: 'Kfgqpc',)
-                                                ),
+                                                    '${quran.getVerse(surahKey, i)} ${quran.getVerseEndSymbol(i)}',
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                      // color: Colors.white,
+                                                      // fontWeight: FontWeight.bold,
+                                                      fontSize: 24,
+                                                      fontFamily: 'Kfgqpc',
+                                                    )),
                                               ),
                                             ),
                                             SizedBox(
