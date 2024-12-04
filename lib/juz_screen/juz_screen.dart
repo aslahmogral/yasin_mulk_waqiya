@@ -55,14 +55,15 @@ class JuzScreen extends StatelessWidget {
                           itemCount: HomeScreenModel.juzs[juzNumber - 1].length,
                           controller: model.pageController,
                           itemBuilder: (context, index) {
-                            var result = HomeScreenModel.juzs[juzNumber - 1][index];
-                            var translationResult =
-                                HomeScreenModel.translations[juzNumber - 1][index];
+                            var result =
+                                HomeScreenModel.juzs[juzNumber - 1][index];
+                            var translationResult = HomeScreenModel
+                                .translations[juzNumber - 1][index];
                             var ArabicText = result.text_uthmani;
                             var englishText = translationResult.text;
-                            var verseKey = result.verseKey;
-                         
-                            var surahStartingVerse = verseKey.split(":")[1];
+                            // var verseKey = result.verseKey;
+
+                            // var surahStartingVerse = verseKey.split(":")[1];
 
                             return Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -78,6 +79,13 @@ class JuzScreen extends StatelessWidget {
                                           SizedBox(
                                             height: 16,
                                           ),
+                                           Padding(
+                                             padding: const EdgeInsets.only(bottom:  16.0),
+                                             child: Visibility(
+                                                    child: Text('(Sajdah verse)'),
+                                                    visible: model.showSajdah(),
+                                                  ),
+                                           ),
                                           Container(
                                             padding: const EdgeInsets.all(16),
                                             width: MediaQuery.of(context)
@@ -93,9 +101,10 @@ class JuzScreen extends StatelessWidget {
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
+                                               
                                                 Visibility(
-                                                  visible: model.showBismillah(),
-                                            
+                                                  visible:
+                                                      model.showBismillah(),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -151,7 +160,9 @@ class JuzScreen extends StatelessWidget {
                                                   child: Column(
                                                     children: [
                                                       Text(
-                                                        englishText.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                                        englishText.replaceAll(
+                                                            RegExp(r'<[^>]*>'),
+                                                            ''),
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .headlineSmall

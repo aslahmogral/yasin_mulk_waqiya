@@ -27,6 +27,8 @@ class JuzScreenModel with ChangeNotifier {
   String verseKey = '';
   String surahName = '';
   String surahStartingVerse = '';
+  int surahNumber = 0;
+  int verseNumber = 0;
   ///////////
   ConfettiController confettiController = ConfettiController(
     duration: Duration(seconds: 1),
@@ -67,6 +69,10 @@ class JuzScreenModel with ChangeNotifier {
     );
   }
 
+  showSajdah() {
+    return quran.isSajdahVerse(surahNumber, verseNumber);
+  }
+
   updateBottomBarTrackers(HomeScreenModel model) {
     remainingAyahs = currentJuzLenght - 1 - currentPage;
     completedPercentage = int.parse(
@@ -81,17 +87,15 @@ class JuzScreenModel with ChangeNotifier {
 
   bool showBismillah() {
     bool showBismillah = false;
-    if(surahStartingVerse == '1') {
+    if (surahStartingVerse == '1') {
       showBismillah = true;
     }
     if (currentPage == 0 && juzNumber == 1) {
       showBismillah = false;
     }
-    if(verseKey == '9:1') {
+    if (verseKey == '9:1') {
       showBismillah = false;
     }
-    
-
     return showBismillah;
   }
 
@@ -101,6 +105,8 @@ class JuzScreenModel with ChangeNotifier {
     ArabicText = result.text_uthmani;
     englishText = translationResult.text;
     verseKey = result.verseKey;
+    surahNumber = int.parse(verseKey.split(":")[0]);
+    verseNumber = int.parse(verseKey.split(":")[1]);
     surahName = quran.getSurahName(int.parse(verseKey.split(":")[0]));
     surahStartingVerse = verseKey.split(":")[1];
   }
