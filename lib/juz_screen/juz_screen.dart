@@ -55,7 +55,15 @@ class JuzScreen extends StatelessWidget {
                           itemCount: HomeScreenModel.juzs[juzNumber - 1].length,
                           controller: model.pageController,
                           itemBuilder: (context, index) {
-                           
+                            var result = HomeScreenModel.juzs[juzNumber - 1][index];
+                            var translationResult =
+                                HomeScreenModel.translations[juzNumber - 1][index];
+                            var ArabicText = result.text_uthmani;
+                            var englishText = translationResult.text;
+                            var verseKey = result.verseKey;
+                         
+                            var surahStartingVerse = verseKey.split(":")[1];
+
                             return Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Stack(
@@ -86,8 +94,8 @@ class JuzScreen extends StatelessWidget {
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 Visibility(
-                                                  visible:
-                                                      model.surahStartingVerse == '1',
+                                                  visible: surahStartingVerse ==
+                                                      '1',
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -102,7 +110,7 @@ class JuzScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Text(
-                                                  model.ArabicText,
+                                                  ArabicText,
                                                   textAlign: TextAlign.center,
                                                   style: const TextStyle(
                                                     color: Colors.white,
@@ -138,19 +146,20 @@ class JuzScreen extends StatelessWidget {
                                                       BorderRadius.circular(15),
                                                 ),
                                                 child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(16.0),
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
                                                   child: Column(
                                                     children: [
-                                                      Text(
-                                                          model.englishText,
+                                                      Text(englishText,
                                                           // textAlign: TextAlign.left,
-                                                          style: Theme.of(context)
-                                                              .textTheme
-                                                              .headlineSmall
-                                                              ?.copyWith(
-                                                                fontSize: 16,
-                                                              )),
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .headlineSmall
+                                                                  ?.copyWith(
+                                                                    fontSize:
+                                                                        16,
+                                                                  )),
                                                     ],
                                                   ),
                                                 )),
@@ -261,8 +270,7 @@ class JuzScreen extends StatelessWidget {
   }
 }
 
-class ThemeProvider {
-}
+class ThemeProvider {}
 
 class bottomBar extends StatelessWidget {
   final JuzScreenModel model;
@@ -506,11 +514,11 @@ class bottomBar extends StatelessWidget {
                         ),
                       ),
                       Visibility(
-
                         // visible: model.wirdList[model.currentPage ].completed ??
                         //     false,
                         // visible: model.checkIfCurrentWirdCompleted(),
-                        visible: model.currentPage == model.currentJuzLenght - 1,
+                        visible:
+                            model.currentPage == model.currentJuzLenght - 1,
                         child: Container(
                           height: 80,
                           width: 80,
@@ -519,13 +527,13 @@ class bottomBar extends StatelessWidget {
                               color: WirdColors.primaryDaycolor,
                               gradient: WirdGradients.listTileShadeGradient),
                           child: Center(
-                            child:  Center(
-                            child: Icon(
-                              size: 35,
-                              Icons.done_all,
-                              color: Colors.white,
+                            child: Center(
+                              child: Icon(
+                                size: 35,
+                                Icons.done_all,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
                           ),
                         ),
                       ),
