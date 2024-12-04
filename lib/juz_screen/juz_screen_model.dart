@@ -79,6 +79,22 @@ class JuzScreenModel with ChangeNotifier {
     notifyListeners();
   }
 
+  bool showBismillah() {
+    bool showBismillah = false;
+    if(surahStartingVerse == '1') {
+      showBismillah = true;
+    }
+    if (currentPage == 0 && juzNumber == 1) {
+      showBismillah = false;
+    }
+    if(verseKey == '9:1') {
+      showBismillah = false;
+    }
+    
+
+    return showBismillah;
+  }
+
   updateJuzTitles(HomeScreenModel model) {
     var result = model.juzs[juzNumber - 1][currentPage];
     var translationResult = model.translations[juzNumber - 1][currentPage];

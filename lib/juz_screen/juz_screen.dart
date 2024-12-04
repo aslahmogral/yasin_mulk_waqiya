@@ -94,8 +94,8 @@ class JuzScreen extends StatelessWidget {
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 Visibility(
-                                                  visible: surahStartingVerse ==
-                                                      '1',
+                                                  visible: model.showBismillah(),
+                                            
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -104,7 +104,7 @@ class JuzScreen extends StatelessWidget {
                                                       '﷽',
                                                       style: const TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 24,
+                                                        fontSize: 42,
                                                       ),
                                                     ),
                                                   ),
@@ -150,16 +150,15 @@ class JuzScreen extends StatelessWidget {
                                                       16.0),
                                                   child: Column(
                                                     children: [
-                                                      Text(englishText,
-                                                          // textAlign: TextAlign.left,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .headlineSmall
-                                                                  ?.copyWith(
-                                                                    fontSize:
-                                                                        16,
-                                                                  )),
+                                                      Text(
+                                                        englishText.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headlineSmall
+                                                            ?.copyWith(
+                                                              fontSize: 16,
+                                                            ),
+                                                      ),
                                                     ],
                                                   ),
                                                 )),
