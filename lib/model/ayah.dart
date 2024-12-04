@@ -1,8 +1,6 @@
 class Ayah {
   final int number;
-  // final int juzNumber;
   final String text_uthmani;
-  // final String translations;
   final String verseKey;
 
   Ayah({
@@ -17,5 +15,13 @@ class Ayah {
       text_uthmani: json['text_uthmani'],
       verseKey: json['verse_key'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': number,
+      'text_uthmani': text_uthmani,
+      'verse_key': verseKey,
+    };
   }
 }

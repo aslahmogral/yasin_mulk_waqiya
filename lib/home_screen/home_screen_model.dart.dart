@@ -38,10 +38,17 @@ class HomeScreenModel extends ChangeNotifier {
   }
 
   HomeScreenModel() {
-    getAyahs();
-    // getQuranTrans();
+    initialise();
+  }
+
+  initialise() async {
+    loading = true;
     _initializeJuzMap();
-    _initSharedPreferences();
+    await _initSharedPreferences();
+    await FormatAndSetQuran();
+    loading = false;
+    notifyListeners();
+    // getQuranTrans();
   }
 
   prevMonthYear() {
@@ -73,7 +80,7 @@ class HomeScreenModel extends ChangeNotifier {
     _loadJuzProgressFromStorage();
   }
 
-  Future<void> getQuranTranslations(int juz) async {
+  Future<void> getJuz(int juz) async {
     var url = Uri.parse(
         'https://api.quran.com/api/v4/quran/verses/uthmani?juz_number=$juz');
 
@@ -88,15 +95,9 @@ class HomeScreenModel extends ChangeNotifier {
     }
   }
 
-  Future<void> getQuranTrans(int juz) async {
+  Future<void> getEnglishTranslation(int juz) async {
     var url = Uri.parse(
-        // 'https://api.quran.com/api/v4/verses/by_juz/$juz?language=en&words=true&translations=true');
-        // /verses/by_juz/$juzNumber"
         'https://api.quran.com/api/v4/quran/translations/131?juz_number=$juz');
-
-    // https://api.quran.com/api/v4/verses/by_juz/:juz_number'
-
-    // https://api.quran.com/api/v4/quran/translations/:translation_id?juz_number=1
 
     var response = await http.get(url, headers: {'Accept': 'application/json'});
     if (response.statusCode == 200) {
@@ -109,12 +110,42 @@ class HomeScreenModel extends ChangeNotifier {
     }
   }
 
-  void getAyahs() async {
+  Future<void> FormatAndSetQuran() async {
     loading = true;
-    for (int i = 1; i <= 30; i++) {
-      await getQuranTranslations(i);
-      await getQuranTrans(i);
+    // await _prefs.clear();
+
+    final juzsFromPrefs = _prefs.getString('juzs');
+    if (juzsFromPrefs == null) {
+      for (int i = 1; i <= 30; i++) {
+        await getJuz(i);
+      }
+      await _prefs.setString('juzs', jsonEncode(juzs));
+    } else {
+      final juzData = jsonDecode(juzsFromPrefs);
+      for (var ayahList in juzData) {
+        juzs.add(List<Ayah>.from(ayahList.map((ayah) => Ayah.fromJson(ayah))));
+      }
+
+      await _prefs.setString('juzs', jsonEncode(juzs));
     }
+
+    final translationsFromPrefs = _prefs.getString('translations');
+
+    if (translationsFromPrefs == null) {
+      for (int i = 1; i <= 30; i++) {
+        await getEnglishTranslation(i);
+      }
+      await _prefs.setString('translations', jsonEncode(translations));
+    } else {
+      final translationsData = jsonDecode(translationsFromPrefs);
+      for (var subList in translationsData) {
+        translations.add(List<Translations>.from(
+            subList.map((translation) => Translations.fromJson(translation))));
+      }
+
+      await _prefs.setString('translations', jsonEncode(translations));
+    }
+
     ayahs = juzs.expand((element) => element).toList();
     for (int i = 1; i <= 114; i++) {
       List element = ayahs
@@ -122,7 +153,6 @@ class HomeScreenModel extends ChangeNotifier {
           .toList();
       surahs.add(Surah(surahNumber: i, ayahs: element));
     }
-
     loading = false;
     notifyListeners();
   }
@@ -134,7 +164,7 @@ class HomeScreenModel extends ChangeNotifier {
     };
   }
 
-  void _initSharedPreferences() async {
+  Future<void> _initSharedPreferences() async {
     _prefs = await SharedPreferences.getInstance();
     _loadJuzProgressFromStorage();
   }
