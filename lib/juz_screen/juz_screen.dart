@@ -44,7 +44,7 @@ class JuzScreen extends StatelessWidget {
                         model.onExitButtonClicked(context, HomeScreenModel);
                       },
                     ),
-                    centerTitle:  true,
+                    centerTitle: true,
                     title: Text(
                       'JUZ ${juzNumber} , ${model.surahName} ${model.verseKey}',
                     ),
@@ -67,7 +67,6 @@ class JuzScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                         
                                           SizedBox(
                                             height: 16,
                                           ),
@@ -379,35 +378,35 @@ class bottomBar extends StatelessWidget {
               ),
 
               //linear progress indicator
-              Container(
-                height: 60,
-                child: Column(
-                  children: [
-                    Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: TweenAnimationBuilder<double>(
-                          tween: Tween<double>(
-                              begin: 0.0, end: model.linearProgressTracker),
-                          duration: const Duration(milliseconds: 300),
-                          builder: (context, value, _) {
-                            return LinearProgressIndicator(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                // color: Colors.teal,
+              // Container(
+              //   height: 60,
+              //   child: Column(
+              //     children: [
+              //       Spacer(),
+              //       Padding(
+              //         padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              //         child: TweenAnimationBuilder<double>(
+              //             tween: Tween<double>(
+              //                 begin: 0.0, end: model.linearProgressTracker),
+              //             duration: const Duration(milliseconds: 300),
+              //             builder: (context, value, _) {
+              //               return LinearProgressIndicator(
+              //                   borderRadius:
+              //                       BorderRadius.all(Radius.circular(20)),
+              //                   // color: Colors.teal,
 
-                                // color: Theme.of(context)
-                                //     .textTheme
-                                //     .bodyMedium
-                                //     ?.color,
+              //                   // color: Theme.of(context)
+              //                   //     .textTheme
+              //                   //     .bodyMedium
+              //                   //     ?.color,
 
-                                minHeight: 6,
-                                value: value);
-                          }),
-                    ),
-                  ],
-                ),
-              ),
+              //                   minHeight: 6,
+              //                   value: value);
+              //             }),
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               //circular progress indicator
             ],
@@ -445,18 +444,18 @@ class bottomBar extends StatelessWidget {
                     BlastDirectionality.directional, // up direction
                 confettiController: model.confettiController),
           ),
-          counter(context)
+          counter(context, homeScreenModel)
         ],
       ),
     );
   }
 
-  InkWell counter(BuildContext context) {
+  InkWell counter(BuildContext context, HomeScreenModel homeScreenModel) {
     return InkWell(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () {
-        model.onExitButtonClicked(context, homeScreenModel);
+        model.onForwardButtonClicked(homeScreenModel);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -480,7 +479,8 @@ class bottomBar extends StatelessWidget {
                         height: 80,
                         width: 80,
                         child: TweenAnimationBuilder<double>(
-                            tween: Tween<double>(begin: 0.0, end: 0),
+                            tween: Tween<double>(
+                                begin: 0.0, end: model.linearProgressTracker),
                             duration: Duration(
                               milliseconds: 300,
                             ),
@@ -499,16 +499,18 @@ class bottomBar extends StatelessWidget {
                         height: 80,
                         width: 80,
                         child: Center(
-                          child: Text(''
-                              // "${model.wirdList[model.currentPage].counted != null ? model.currentPageWirdCounted : 0}/${model.wirdList[model.currentPage].count.toString()}",
-                              ),
+                          child: Text(
+                            '${model.currentPage + 1} / ${model.currentJuzLenght}',
+                            // "${model.wirdList[model.currentPage].counted != null ? model.currentPageWirdCounted : 0}/${model.wirdList[model.currentPage].count.toString()}",
+                          ),
                         ),
                       ),
                       Visibility(
+
                         // visible: model.wirdList[model.currentPage ].completed ??
                         //     false,
                         // visible: model.checkIfCurrentWirdCompleted(),
-                        visible: true,
+                        visible: model.currentPage == model.currentJuzLenght - 1,
                         child: Container(
                           height: 80,
                           width: 80,
@@ -517,23 +519,13 @@ class bottomBar extends StatelessWidget {
                               color: WirdColors.primaryDaycolor,
                               gradient: WirdGradients.listTileShadeGradient),
                           child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  size: 35,
-                                  Icons.close,
-                                  color: Colors.white,
-                                ),
-                                Text(
-                                  'Done',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 12,
-                                      color: Colors.white),
-                                )
-                              ],
+                            child:  Center(
+                            child: Icon(
+                              size: 35,
+                              Icons.done_all,
+                              color: Colors.white,
                             ),
+                          ),
                           ),
                         ),
                       ),
